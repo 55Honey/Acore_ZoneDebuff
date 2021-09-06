@@ -15,8 +15,5 @@ Adjust the config flags and IDs in the .lua
 ## GM Usage:
 Nothing to do.
 
-### (healerCompetition.lua)
-Nothing to do, watch them trying if you want to.
-
 ## Player Usage:
 Go to the zone. Have a hard time.
