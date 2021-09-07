@@ -1,4 +1,4 @@
-## EventScripts
+## lua-zone-debuff
 Lua script for Azerothcore with ElunaLUA to debuff players in zones listed in the configuration.
 
 #### Find me on patreon: https://www.patreon.com/Honeys
