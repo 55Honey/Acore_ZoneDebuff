@@ -19,6 +19,7 @@
 ------------------------------------------------------------------------------------------------
 local Config = {}
 
+-- all modifiers are in %
 Config.baseStatModifier = -20
 Config.meleeAPModifier = -20
 Config.rangedAPModifier = -20
@@ -27,6 +28,7 @@ Config.DamageDone = -50
 
 local Config_Zones = {}     --zones where to debuff players
 
+-- all players in these zones will become debuffed on login, when entering and resurrecting
 table.insert(Config_Zones, 1583) -- Blackrock Spire
 
 local PLAYER_EVENT_ON_LOGIN = 3               -- (event, player)
