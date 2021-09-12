@@ -31,6 +31,10 @@ local Config_Zones = {}     --zones where to debuff players
 -- all players in these zones will become debuffed on login, when entering and resurrecting
 table.insert(Config_Zones, 1583) -- Blackrock Spire
 
+------------------------------------------
+-- NO ADJUSTMENTS REQUIRED BELOW THIS LINE
+------------------------------------------
+
 local PLAYER_EVENT_ON_LOGIN = 3               -- (event, player)
 local PLAYER_EVENT_ON_UPDATE_ZONE = 27        -- (event, player, newZone, newArea)
 local PLAYER_EVENT_ON_RESURRECT = 36          -- (event, player)
