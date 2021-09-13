@@ -53,11 +53,7 @@ end
 
 local function zd_shouldDebuff(player)
     local zone = player:GetZoneId()
-    if has_value(Config_Zones, zone) then
-        return true
-    end
-
-    return false
+    return has_value(Config_Zones, zone)
 end
 
 local function zd_debuff(player)
