@@ -23,16 +23,14 @@ local Config = {}
 Config.active = 1
 
 -- all modifiers are in %
-Config.baseStatModifier = -20
-Config.meleeAPModifier = -20
-Config.rangedAPModifier = -20
-Config.DamageTaken = 20
-Config.DamageDone = -50
+Config.baseResilience = 200
 
 local Config_Zones = {}     --zones where to debuff players
 
 -- all players in these zones will become debuffed on login, when entering and resurrecting
-table.insert(Config_Zones, 1583) -- Blackrock Spire
+table.insert(Config_Zones, 3358) -- Arathi Basin
+table.insert(Config_Zones, 2597) -- Alterac Valley
+table.insert(Config_Zones, 3277) -- Warsong Gulch
 
 ------------------------------------------
 -- NO ADJUSTMENTS REQUIRED BELOW THIS LINE
@@ -61,17 +59,13 @@ local function zd_shouldDebuff(player)
 end
 
 local function zd_debuff(player)
-    if not player:HasAura(63388) then
-        player:CastCustomSpell(player, 63388, false, Config.baseStatModifier,Config.meleeAPModifier,Config.rangedAPModifier)
-    end
-    if not player:HasAura(72341) then
-        player:CastCustomSpell(player, 72341, false, Config.DamageTaken,Config.DamageDone)
+    if not player:HasAura(56509 ) then
+        player:CastCustomSpell(player, 56509 , false, Config.baseResilience)
     end
 end
 
 local function zd_removeDebuff(player)
-    player:RemoveAura(63388)
-    player:RemoveAura(72341)
+    player:RemoveAura(56509)
 end
 
 local function zd_checkPlayerZone(player)
