@@ -15,7 +15,7 @@
 --               -  adjust config in this file
 --               -  add this script to ../lua_scripts/
 ------------------------------------------------------------------------------------------------
--- GM GUIDE:     -  nothing to do. Just watch them die.
+-- GM GUIDE:     -  nothing to do. Just watch them suffer.
 ------------------------------------------------------------------------------------------------
 local Config = {}
 
@@ -32,7 +32,8 @@ Config.DamageDone = -50
 local Config_Zones = {}     --zones where to debuff players
 
 -- all players in these zones will become debuffed on login, when entering and resurrecting
-table.insert(Config_Zones, 1583) -- Blackrock Spire
+table.insert(Config_Zones, 2557) -- Dire Maul
+--table.insert(Config_Zones, 1583) -- Blackrock Spire
 
 ------------------------------------------
 -- NO ADJUSTMENTS REQUIRED BELOW THIS LINE

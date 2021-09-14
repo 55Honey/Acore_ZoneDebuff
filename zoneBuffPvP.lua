@@ -15,7 +15,7 @@
 --               -  adjust config in this file
 --               -  add this script to ../lua_scripts/
 ------------------------------------------------------------------------------------------------
--- GM GUIDE:     -  nothing to do. Just watch them die.
+-- GM GUIDE:     -  nothing to do.
 ------------------------------------------------------------------------------------------------
 local Config = {}
 
