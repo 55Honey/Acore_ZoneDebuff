@@ -23,7 +23,9 @@ local Config = {}
 Config.active = 1
 
 -- all modifiers are in %
-Config.baseResilience = 200
+--Config.baseResilience = 200
+Config.DamageTaken = 0
+Config.DamageDone = -20
 
 local Config_Zones = {}     --zones where to debuff players
 
@@ -55,13 +57,17 @@ local function zd_shouldDebuff(player)
 end
 
 local function zd_debuff(player)
-    if not player:HasAura(56509 ) then
-        player:CastCustomSpell(player, 56509 , false, Config.baseResilience)
+    --if not player:HasAura(56509 ) then
+    --    player:CastCustomSpell(player, 56509 , false, Config.baseResilience)
+    --end
+    if not player:HasAura(72341) then
+        player:CastCustomSpell(player, 72341, false, Config.DamageTaken,Config.DamageDone)
     end
 end
 
 local function zd_removeDebuff(player)
     player:RemoveAura(56509)
+    player:RemoveAura(72341)
 end
 
 local function zd_checkPlayerZone(player)

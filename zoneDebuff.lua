@@ -20,7 +20,7 @@
 local Config = {}
 
 -- on/off switch (0/1)
-Config.active = 1
+Config.active = 0
 
 -- all modifiers are in %
 Config.baseStatModifier = -20
