@@ -22,10 +22,9 @@ local Config = {}
 -- on/off switch (0/1)
 Config.active = 1
 
--- all modifiers are in %
 --Config.baseResilience = 200
-Config.DamageTaken = 0
-Config.DamageDone = -20
+Config.DamageTaken = -20
+Config.DamageDone = 0
 
 local Config_Zones = {}     --zones where to debuff players
 
@@ -33,6 +32,11 @@ local Config_Zones = {}     --zones where to debuff players
 table.insert(Config_Zones, 3358) -- Arathi Basin
 table.insert(Config_Zones, 2597) -- Alterac Valley
 table.insert(Config_Zones, 3277) -- Warsong Gulch
+table.insert(Config_Zones, 4406) -- Ring of Valor
+table.insert(Config_Zones, 3968) -- Ruins of Lordaeron
+table.insert(Config_Zones, 3698) -- Ring of Trials
+table.insert(Config_Zones, 3702) -- Blade's Edge Arena
+table.insert(Config_Zones, 4378) -- Dalaran Arena
 
 ------------------------------------------
 -- NO ADJUSTMENTS REQUIRED BELOW THIS LINE
@@ -66,7 +70,6 @@ local function zd_debuff(player)
 end
 
 local function zd_removeDebuff(player)
-    player:RemoveAura(56509)
     player:RemoveAura(72341)
 end
 
