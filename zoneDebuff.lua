@@ -20,7 +20,7 @@
 local Config = {}
 
 -- on/off switch (0/1)
-Config.active = 0
+Config.active = 1
 
 -- all modifiers are in %
 Config.baseStatModifier = -20
@@ -64,11 +64,18 @@ local function zd_debuff(player)
     if not player:HasAura(72341) then
         player:CastCustomSpell(player, 72341, false, Config.DamageTaken,Config.DamageDone)
     end
+    
+    local playerPet = player:GetMap():GetWorldObject(player:GetPetGUID()):ToUnit()
+    if not playerPet:HasAura(72341) then
+        player:CastCustomSpell(playerPet, 72341, false, Config.DamageTaken,Config.DamageDone)
+    end
 end
 
 local function zd_removeDebuff(player)
     player:RemoveAura(63388)
     player:RemoveAura(72341)
+    local playerPet = player:GetMap():GetWorldObject(player:GetPetGUID()):ToUnit()
+    playerPet:RemoveAura(72341)
 end
 
 local function zd_checkPlayerZone(player)
