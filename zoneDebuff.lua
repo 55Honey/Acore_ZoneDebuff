@@ -64,38 +64,54 @@ local function zd_debuff(player)
     if not player:HasAura(72341) then
         player:CastCustomSpell(player, 72341, false, Config.DamageTaken,Config.DamageDone)
     end
-    
-    local playerPet = player:GetMap():GetWorldObject(player:GetPetGUID()):ToUnit()
-    if not playerPet:HasAura(72341) then
-        player:CastCustomSpell(playerPet, 72341, false, Config.DamageTaken,Config.DamageDone)
+
+    local petGuid = player:GetPetGUID()
+    if petGuid ~= 0 then
+        print("69: ")
+        local map = player:GetMap()
+        local playerPet = map:GetWorldObject(petGuid):ToUnit()
+        if not playerPet:HasAura(72341) then
+            player:CastCustomSpell(playerPet, 72341, false, Config.DamageTaken,Config.DamageDone)
+        end
     end
 end
 
 local function zd_removeDebuff(player)
     player:RemoveAura(63388)
     player:RemoveAura(72341)
-    local playerPet = player:GetMap():GetWorldObject(player:GetPetGUID()):ToUnit()
-    playerPet:RemoveAura(72341)
+    local petGuid = player:GetPetGUID()
+    print("83")
+    print(petGuid)
+    if petGuid ~= 0 and petGuid ~= nil then
+        local map = player:GetMap()
+        local playerPet = map:GetWorldObject(petGuid):ToUnit()
+        playerPet:RemoveAura(72341)
+    end
 end
 
 local function zd_checkPlayerZone(player)
     if zd_shouldDebuff(player) then
         zd_debuff(player)
+        print("4444")
     else
         zd_removeDebuff(player)
+        print("5555")
     end
 end
 
 local function zd_checkZoneLogin(event, player)
     zd_checkPlayerZone(player)
+    print("1111")
 end
 
 local function zd_checkZoneUpdate(event, player, newZone, newArea)
     zd_checkPlayerZone(player)
+    print("2222")
 end
 
 local function zd_checkZoneResurrect(event, player)
     zd_checkPlayerZone(player)
+    print("3333")
 end
 
 if Config.active == 1 then
