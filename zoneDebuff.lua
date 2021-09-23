@@ -70,9 +70,8 @@ local function zd_debuff(player, checkPet)
 
     if checkPet == true then
         local petGuid = player:GetPetGUID()
-        cancel = RegisterUniqueCreatureEvent(petGuid, instance_id, event, function )
-        
-        if petGuid ~= 0 then
+
+        if tonumber(tostring(petGuid)) ~= 0 then
             print("69: ")
             local map = player:GetMap()
             local playerPet = map:GetWorldObject(petGuid):ToUnit()
@@ -89,7 +88,7 @@ local function zd_removeDebuff(player)
     local petGuid = player:GetPetGUID()
     print("83")
     print(petGuid)
-    if petGuid ~= 0 and petGuid ~= nil then
+    if tonumber(tostring(petGuid)) ~= 0 then
         local map = player:GetMap()
         local playerPet = map:GetWorldObject(petGuid):ToUnit()
         playerPet:RemoveAura(72341)
