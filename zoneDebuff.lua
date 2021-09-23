@@ -67,7 +67,7 @@ local function zd_debuff(player)
     
     local playerPet = player:GetMap():GetWorldObject(player:GetPetGUID()):ToUnit()
     if not playerPet:HasAura(72341) then
-        player:CastCustomSpell(playerPet, 72341, false, Config.DamageTaken,Config.DamageDone)
+        playerPet:CastCustomSpell(playerPet, 72341, false, Config.DamageTaken,Config.DamageDone)
     end
 end
 
