@@ -72,7 +72,6 @@ local function zd_debuff(player, checkPet)
         local petGuid = player:GetPetGUID()
 
         if tonumber(tostring(petGuid)) ~= 0 then
-            print("69: ")
             local map = player:GetMap()
             local playerPet = map:GetWorldObject(petGuid):ToUnit()
             if not playerPet:HasAura(72341) then
@@ -86,8 +85,6 @@ local function zd_removeDebuff(player)
     player:RemoveAura(63388)
     player:RemoveAura(72341)
     local petGuid = player:GetPetGUID()
-    print("83")
-    print(petGuid)
     if tonumber(tostring(petGuid)) ~= 0 then
         local map = player:GetMap()
         local playerPet = map:GetWorldObject(petGuid):ToUnit()
@@ -98,31 +95,25 @@ end
 local function zd_checkPlayerZone(player, checkPet)
     if zd_shouldDebuff(player) then
         zd_debuff(player, checkPet)
-        print("4444")
     else
         zd_removeDebuff(player)
-        print("5555")
     end
 end
 
 local function zd_checkZoneLogin(event, player)
     zd_checkPlayerZone(player,false)
-    print("1111")
 end
 
 local function zd_checkZoneUpdate(event, player, newZone, newArea)
     zd_checkPlayerZone(player,false)
-    print("2222")
 end
 
 local function zd_checkZoneCombat(event, player, enemy)
     zd_checkPlayerZone(player,true)
-    print("6666")
 end
 
 local function zd_checkZoneResurrect(event, player)
     zd_checkPlayerZone(player,false)
-    print("3333")
 end
 
 if Config.active == 1 then
