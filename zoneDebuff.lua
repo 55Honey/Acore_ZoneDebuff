@@ -40,11 +40,9 @@ table.insert(Config_Zones, 2557) -- Dire Maul
 ------------------------------------------
 
 local PLAYER_EVENT_ON_LOGIN = 3               -- (event, player)
-local PLAYER_EVENT_ON_UPDATE_ZONE = 27        -- (event, player, newZone, newArea)
-local PLAYER_EVENT_ON_ENTER_COMBAT = 33       -- (event, player, enemy)
+local PLAYER_EVENT_ON_MAP_CHANGE = 28         -- (event, player)
 local PLAYER_EVENT_ON_RESURRECT = 36          -- (event, player)
-
-local CREATURE_EVENT_ON_ENTER_COMBAT = 1      -- (event, creature, target)
+local PLAYER_EVENT_ON_PET_SPAWNED = 43        -- (event, player, pet)
 
 local function has_value(tab, val)
     for index, value in ipairs(tab) do
@@ -55,70 +53,68 @@ local function has_value(tab, val)
     return false
 end
 
-local function zd_shouldDebuff(player, checkPet)
-    local zone = player:GetZoneId()
+local function zd_shouldDebuff(unit)
+    local zone = unit:GetZoneId()
     return has_value(Config_Zones, zone)
 end
 
-local function zd_debuff(player, checkPet)
+local function zd_debuff(player)
     if not player:HasAura(63388) then
         player:CastCustomSpell(player, 63388, false, Config.baseStatModifier,Config.meleeAPModifier,Config.rangedAPModifier)
     end
     if not player:HasAura(72341) then
         player:CastCustomSpell(player, 72341, false, Config.DamageTaken,Config.DamageDone)
     end
+end
 
-    if checkPet == true then
-        local petGuid = player:GetPetGUID()
-
-        if tonumber(tostring(petGuid)) ~= 0 then
-            local map = player:GetMap()
-            local playerPet = map:GetWorldObject(petGuid):ToUnit()
-            if not playerPet:HasAura(72341) then
-                playerPet:CastCustomSpell(playerPet, 72341, false, Config.DamageTaken,Config.DamageDone)
-            end
-        end
-    end
+local function zd_debuffPet(pet)
+    pet:CastCustomSpell(pet, 72341, false, Config.DamageTaken,Config.DamageDone)
 end
 
 local function zd_removeDebuff(player)
     player:RemoveAura(63388)
     player:RemoveAura(72341)
-    local petGuid = player:GetPetGUID()
-    if tonumber(tostring(petGuid)) ~= 0 then
-        local map = player:GetMap()
-        local playerPet = map:GetWorldObject(petGuid):ToUnit()
-        playerPet:RemoveAura(72341)
-    end
 end
 
-local function zd_checkPlayerZone(player, checkPet)
+local function zd_removeDebuffPet(pet)
+    pet:RemoveAura(72341)
+end
+
+local function zd_checkPlayerZone(player)
     if zd_shouldDebuff(player) then
-        zd_debuff(player, checkPet)
+        zd_debuff(player)
     else
         zd_removeDebuff(player)
     end
 end
 
+local function zd_checkPetZone(pet)
+    if zd_shouldDebuff(pet) then
+        zd_debuffPet(pet)
+    else
+        zd_removeDebuffPet(pet)
+    end
+end
+
+local function zd_checkZonePetSpawned(event, player, pet)
+    zd_checkPetZone(pet)
+end
+
 local function zd_checkZoneLogin(event, player)
-    zd_checkPlayerZone(player,false)
+    zd_checkPlayerZone(player)
 end
 
 local function zd_checkZoneUpdate(event, player, newZone, newArea)
-    zd_checkPlayerZone(player,false)
-end
-
-local function zd_checkZoneCombat(event, player, enemy)
-    zd_checkPlayerZone(player,true)
+    zd_checkPlayerZone(player)
 end
 
 local function zd_checkZoneResurrect(event, player)
-    zd_checkPlayerZone(player,false)
+    zd_checkPlayerZone(player)
 end
 
 if Config.active == 1 then
     RegisterPlayerEvent(PLAYER_EVENT_ON_LOGIN, zd_checkZoneLogin)
-    RegisterPlayerEvent(PLAYER_EVENT_ON_UPDATE_ZONE, zd_checkZoneUpdate)
-    RegisterPlayerEvent(PLAYER_EVENT_ON_ENTER_COMBAT, zd_checkZoneCombat)
+    RegisterPlayerEvent(PLAYER_EVENT_ON_MAP_CHANGE, zd_checkZoneUpdate)
+    RegisterPlayerEvent(PLAYER_EVENT_ON_PET_SPAWNED, zd_checkZonePetSpawned)
     RegisterPlayerEvent(PLAYER_EVENT_ON_RESURRECT,zd_checkZoneResurrect)
 end
