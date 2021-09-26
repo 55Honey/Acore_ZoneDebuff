@@ -23,10 +23,10 @@ local Config = {}
 Config.active = 1
 
 -- all modifiers are in %
-Config.baseStatModifier = -20
+Config.baseStatModifier = -30
 Config.meleeAPModifier = -20
 Config.rangedAPModifier = -20
-Config.DamageTaken = 30
+Config.DamageTaken = 40
 Config.DamageDone = -50
 
 local Config_Zones = {}     --zones where to debuff players
