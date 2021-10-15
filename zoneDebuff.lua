@@ -26,9 +26,11 @@ local Config_DungeonZones = {}     --zones where to debuff players when no rdf
 local Config_PvPZones = {}         --zones where to debuff players always for PvP
 
 -- on/off switch (0/1)
+
 Config.RaidActive = 1
 Config.DungeonActive = 0           -- While 1, currently applies in RDF, too. Maybe needs a new hook
 Config.PvPActive = 1
+
 
 -- all modifiers are in %
 ConfigRaid.baseStatModifier = -50
