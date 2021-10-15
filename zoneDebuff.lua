@@ -27,21 +27,19 @@ local Config_PvPZones = {}         --zones where to debuff players always for Pv
 
 -- on/off switch (0/1)
 Config.RaidActive = 1
-Config.DungeonActive = 1
-Config.PvPActive = 0
+Config.DungeonActive = 0           -- While 1, currently applies in RDF, too. Maybe needs a new hook
+Config.PvPActive = 1
 
 -- all modifiers are in %
-ConfigRaid.baseStatModifier = -30
-ConfigRaid.meleeAPModifier = -10
-ConfigRaid.rangedAPModifier = -20
-ConfigRaid.PhysDamageTaken = 20
-ConfigRaid.DamageTaken = 0
+ConfigRaid.baseStatModifier = -50
+ConfigRaid.meleeAPModifier = 0
+ConfigRaid.rangedAPModifier = -10
+ConfigRaid.DamageTaken = 50
 ConfigRaid.DamageDone = -50
 
 ConfigDungeon.baseStatModifier = -50
 ConfigDungeon.meleeAPModifier = -10
 ConfigDungeon.rangedAPModifier = -20
-ConfigDungeon.PhysDamageTaken = 0
 ConfigDungeon.DamageTaken = 50
 ConfigDungeon.DamageDone = -50
 
@@ -85,21 +83,33 @@ end
 
 local function zd_shouldDebuffRaid(unit)
     local zone = unit:GetZoneId()
-    return has_value(Config_RaidZones, zone)
+    if Config.RaidActive ~= 1 then
+        return false
+    else
+        return has_value(Config_RaidZones, zone)
+    end
 end
 
 local function zd_shouldDebuffDungeon(unit)
-    --Check for RDF buff (Luck of the Draw)
-    if unit:HasAura(72221) then
+    if Config.DungeonActive ~= 1 then
         return false
+    else
+        --Check for RDF buff (Luck of the Draw)
+        if unit:HasAura(72221) then
+            return false
+        end
+        local zone = unit:GetZoneId()
+        return has_value(Config_DungeonZones, zone)
     end
-    local zone = unit:GetZoneId()
-    return has_value(Config_DungeonZones, zone)
 end
 
 local function zd_shouldDebuffPvP(unit)
-    local zone = unit:GetZoneId()
-    return has_value(Config_PvPZones, zone)
+    if Config.PvPActive ~= 1 then
+        return false
+    else
+        local zone = unit:GetZoneId()
+        return has_value(Config_PvPZones, zone)
+    end
 end
 
 local function zd_debuffRaid(player)
@@ -109,9 +119,6 @@ local function zd_debuffRaid(player)
     if not player:HasAura(72341) then
         player:CastCustomSpell(player, 72341, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
     end
-    if not player:HasAura(71235) then
-        player:CastCustomSpell(player, 72341, false, ConfigRaid.PhysDamageTaken)
-    end
 end
 
 local function zd_debuffDungeon(player)
@@ -120,9 +127,6 @@ local function zd_debuffDungeon(player)
     end
     if not player:HasAura(72341) then
         player:CastCustomSpell(player, 72341, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
-    end
-    if not player:HasAura(71235) then
-        player:CastCustomSpell(player, 72341, false, ConfigDungeon.PhysDamageTaken)
     end
 end
 
@@ -147,7 +151,6 @@ end
 local function zd_removeDebuff(player)
     player:RemoveAura(63388)
     player:RemoveAura(72341)
-    player:RemoveAura(71235)
 end
 
 local function zd_removeDebuffPet(pet)
@@ -200,7 +203,7 @@ local function zd_checkZoneResurrect(event, player)
     zd_checkPlayerZone(player)
 end
 
-if Config.DungeonActive == 1 or Config.DungeonActive == 1 or Config.PvPActive == 1 then
+if Config.RaidActive == 1 or Config.DungeonActive == 1 or Config.PvPActive == 1 then
     RegisterPlayerEvent(PLAYER_EVENT_ON_LOGIN, zd_checkZoneLogin)
     RegisterPlayerEvent(PLAYER_EVENT_ON_MAP_CHANGE, zd_checkZoneUpdate)
     RegisterPlayerEvent(PLAYER_EVENT_ON_PET_SPAWNED, zd_checkZonePetSpawned)
