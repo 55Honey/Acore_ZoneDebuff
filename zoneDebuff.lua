@@ -143,6 +143,9 @@ local function zd_debuffPetRaid(pet)
 end
 
 local function zd_debuffPetDungeon(pet)
+    if pet:GetOwner():HasAura(72221) then
+        return false
+    end
     pet:CastCustomSpell(pet, 72341, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
 end
 
