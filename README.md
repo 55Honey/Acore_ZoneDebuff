@@ -13,8 +13,8 @@ If the directory was not changed in the ElunaLua config, add the .lua script to 
 Adjust the config flags and IDs in the `.lua` files. Each file has it's own list of zones.
 
 There are
-- `zoneDebuff.lua` to change player and pet stats globally as well as damage dealt and damage taken.
-- `zoneBuffPvP.lua` to change all players' damage taken. 
+- `zoneDebuff.lua` to change player stats globally for certain zones as well as player and and pet/minion damage dealt and damage taken.
+They're configurable individually for Dungeons, Raids and BGs/Arenas.
 
 ## GM Usage:
 Nothing to do.
