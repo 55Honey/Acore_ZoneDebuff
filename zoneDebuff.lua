@@ -28,7 +28,7 @@ local Config_PvPZones = {}         --zones where to debuff players always for Pv
 -- on/off switch (0/1)
 
 Config.RaidActive = 1
-Config.DungeonActive = 0           -- While 1, currently applies in RDF, too. Maybe needs a new hook
+Config.DungeonActive = 0
 Config.PvPActive = 1
 
 
