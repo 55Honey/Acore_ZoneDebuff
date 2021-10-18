@@ -12,10 +12,12 @@ If the directory was not changed in the ElunaLua config, add the .lua script to 
 ## Admin Usage:
 Adjust the config flags and IDs in the `.lua` files. Each file has it's own list of zones.
 
-There are
-- `zoneDebuff.lua` to change player stats globally for certain zones as well as player and and pet/minion damage dealt and damage taken.
-They're configurable individually for Dungeons, Raids and BGs/Arenas.
-It is also possible to remove a configurable list of Auras, meant for World Buffs for another list of map IDs.
+There is `zoneDebuff.lua` to change player stats globally for certain zones as well as player and and pet/minion damage dealt and damage taken.
+They're configurable individually for
+- Dungeons, 
+- Raids and 
+- BGs/Arenas.
+- It is also possible to remove a configurable list of Auras, meant for World Buffs for another list of map IDs.
 
 ## GM Usage:
 Nothing to do.
