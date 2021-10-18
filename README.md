@@ -15,6 +15,7 @@ Adjust the config flags and IDs in the `.lua` files. Each file has it's own list
 There are
 - `zoneDebuff.lua` to change player stats globally for certain zones as well as player and and pet/minion damage dealt and damage taken.
 They're configurable individually for Dungeons, Raids and BGs/Arenas.
+It is also possible to remove a configurable list of Auras, meant for World Buffs for another list of map IDs.
 
 ## GM Usage:
 Nothing to do.
