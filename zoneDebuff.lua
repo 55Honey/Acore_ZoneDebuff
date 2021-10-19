@@ -115,6 +115,10 @@ local function zd_shouldDebuffRaid(unit)
         return false
     else
         local mapId = unit:GetMap():GetMapId()
+        -- hardcoded check for LBRS RDF
+        if mapId == 229 and unit:HasAura(72221) then
+            return false
+        end
         return has_value(Config_RaidMaps, mapId)
     end
 end
