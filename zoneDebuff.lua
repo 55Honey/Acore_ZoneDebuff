@@ -36,17 +36,19 @@ Config.NoWorldBuffMaps = 1
 
 
 -- all modifiers are in %
-ConfigRaid.baseStatModifier = -50
-ConfigRaid.meleeAPModifier = 0
-ConfigRaid.rangedAPModifier = -10
+ConfigRaid.baseStatModifier = 0
+ConfigRaid.meleeAPModifier = -10
+ConfigRaid.rangedAPModifier = -20
 ConfigRaid.DamageTaken = 50
-ConfigRaid.DamageDone = -50
+ConfigRaid.DamageDone = -60
+ConfigRaid.hpModifier = -20
 
-ConfigDungeon.baseStatModifier = -50
+ConfigDungeon.baseStatModifier = 0
 ConfigDungeon.meleeAPModifier = -10
 ConfigDungeon.rangedAPModifier = -20
 ConfigDungeon.DamageTaken = 50
-ConfigDungeon.DamageDone = -50
+ConfigDungeon.DamageDone = -60
+ConfigDungeon.hpModifier = -30
 
 ConfigPvP.DamageTaken = -20
 ConfigPvP.DamageDone = 0
@@ -57,7 +59,7 @@ table.insert(Config_DungeonMaps, 289) -- Scholomance
 table.insert(Config_DungeonMaps, 329) -- Stratholme
 
 table.insert(Config_RaidMaps, 229) -- Blackrock Spire
-table.insert(Config_RaidMaps, 409) -- Molten Core
+--table.insert(Config_RaidMaps, 409) -- Molten Core
 --table.insert(Config_RaidMaps, 469) -- Blackwing Lair
 --table.insert(Config_RaidMaps, 509) -- Ruins of Ahn'Qiraj
 --table.insert(Config_RaidMaps, 531) -- Temple of Ahn'Qiraj
@@ -152,6 +154,9 @@ local function zd_debuffRaid(player)
     if not player:HasAura(72341) then
         player:CastCustomSpell(player, 72341, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
     end
+    if not player:HasAura(89501) then
+        player:CastCustomSpell(player, 89501, false, ConfigRaid.hpModifier)
+    end
 end
 
 local function zd_debuffDungeon(player)
@@ -160,6 +165,9 @@ local function zd_debuffDungeon(player)
     end
     if not player:HasAura(72341) then
         player:CastCustomSpell(player, 72341, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
+    end
+    if not player:HasAura(89501) then
+        player:CastCustomSpell(player, 89501, false, ConfigDungeon.hpModifier)
     end
 end
 
@@ -199,6 +207,7 @@ end
 local function zd_removeDebuff(player)
     player:RemoveAura(63388)
     player:RemoveAura(72341)
+    player:RemoveAura(89501)
 end
 
 local function zd_removeDebuffPet(pet)
