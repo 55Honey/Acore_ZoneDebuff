@@ -34,6 +34,10 @@ Config.DungeonActive = 0
 Config.PvPActive = 1
 Config.NoWorldBuffMaps = 1
 
+Config.HpAuraSpellId = 89501
+Config.DamageDoneTaken = 89502
+Config.BaseStatAP = 89503
+
 
 -- all modifiers are in %
 ConfigRaid.baseStatModifier = 0
@@ -148,48 +152,48 @@ local function zd_shouldDebuffPvP(unit)
 end
 
 local function zd_debuffRaid(player)
-    if not player:HasAura(63388) then
-        player:CastCustomSpell(player, 63388, false, ConfigRaid.baseStatModifier,ConfigRaid.meleeAPModifier,ConfigRaid.rangedAPModifier)
+    if not player:HasAura(Config.BaseStatAP) then
+        player:CastCustomSpell(player, Config.BaseStatAP, false, ConfigRaid.baseStatModifier,ConfigRaid.meleeAPModifier,ConfigRaid.rangedAPModifier)
     end
-    if not player:HasAura(72341) then
-        player:CastCustomSpell(player, 72341, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
+    if not player:HasAura(Config.DamageDoneTaken) then
+        player:CastCustomSpell(player, Config.DamageDoneTaken, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
     end
-    if not player:HasAura(89501) then
-        player:CastCustomSpell(player, 89501, false, ConfigRaid.hpModifier)
+    if not player:HasAura(Config.HpAuraSpellId) then
+        player:CastCustomSpell(player, Config.HpAuraSpellId, false, ConfigRaid.hpModifier)
     end
 end
 
 local function zd_debuffDungeon(player)
-    if not player:HasAura(63388) then
-        player:CastCustomSpell(player, 63388, false, ConfigDungeon.baseStatModifier,ConfigDungeon.meleeAPModifier,ConfigDungeon.rangedAPModifier)
+    if not player:HasAura(Config.BaseStatAP) then
+        player:CastCustomSpell(player, Config.BaseStatAP, false, ConfigDungeon.baseStatModifier,ConfigDungeon.meleeAPModifier,ConfigDungeon.rangedAPModifier)
     end
-    if not player:HasAura(72341) then
-        player:CastCustomSpell(player, 72341, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
+    if not player:HasAura(Config.DamageDoneTaken) then
+        player:CastCustomSpell(player, Config.DamageDoneTaken, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
     end
-    if not player:HasAura(89501) then
-        player:CastCustomSpell(player, 89501, false, ConfigDungeon.hpModifier)
+    if not player:HasAura(Config.HpAuraSpellId) then
+        player:CastCustomSpell(player, Config.HpAuraSpellId, false, ConfigDungeon.hpModifier)
     end
 end
 
 local function zd_debuffPvP(player)
-    if not player:HasAura(72341) then
-        player:CastCustomSpell(player, 72341, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
+    if not player:HasAura(Config.DamageDoneTaken) then
+        player:CastCustomSpell(player, Config.DamageDoneTaken, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
     end
 end
 
 local function zd_debuffPetRaid(pet)
-    pet:CastCustomSpell(pet, 72341, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
+    pet:CastCustomSpell(pet, Config.DamageDoneTaken, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
 end
 
 local function zd_debuffPetDungeon(pet)
     if pet:GetOwner():HasAura(72221) then
         return false
     end
-    pet:CastCustomSpell(pet, 72341, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
+    pet:CastCustomSpell(pet, Config.DamageDoneTaken, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
 end
 
 local function zd_debuffPetPvP(pet)
-    pet:CastCustomSpell(pet, 72341, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
+    pet:CastCustomSpell(pet, Config.DamageDoneTaken, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
 end
 
 local function zd_removeWorldbuffs(player)
@@ -205,13 +209,13 @@ local function zd_removeWorldbuffsPet(pet)
 end
 
 local function zd_removeDebuff(player)
-    player:RemoveAura(63388)
-    player:RemoveAura(72341)
-    player:RemoveAura(89501)
+    player:RemoveAura(Config.BaseStatAP)
+    player:RemoveAura(Config.DamageDoneTaken)
+    player:RemoveAura(Config.HpAuraSpellId)
 end
 
 local function zd_removeDebuffPet(pet)
-    pet:RemoveAura(72341)
+    pet:RemoveAura(Config.DamageDoneTaken)
 end
 
 local function zd_checkPlayerMap(player)
