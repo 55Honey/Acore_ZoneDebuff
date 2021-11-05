@@ -9,7 +9,8 @@
 -- requires ElunaLua module
 
 
--- This module debuffs players when they enter or login a zone specified in Config_Zones
+-- This module debuffs players when they enter a map or login into a map specified in Config_Maps.
+
 ------------------------------------------------------------------------------------------------
 -- ADMIN GUIDE:  -  compile the core with ElunaLua module
 --               -  adjust config in this file
@@ -21,11 +22,11 @@ local Config = {}
 local ConfigRaid = {}
 local ConfigDungeon = {}
 local ConfigPvP = {}
-local Config_RaidZones = {}        --zones where to debuff players always for PvE
-local Config_DungeonZones = {}     --zones where to debuff players when no rdf
-local Config_PvPZones = {}         --zones where to debuff players always for PvP
-local Config_NoWorldBuffMaps = {}  --maps where to remove world buffs
-local Config_WorldBuff = {}        --spell IDs of world buffs to be removed
+local Config_RaidMaps = {}         -- maps where to debuff players always for PvE
+local Config_DungeonMaps = {}      -- maps where to debuff players when no rdf
+local Config_PvPMaps = {}          -- maps where to debuff players always for PvP
+local Config_NoWorldBuffMaps = {}  -- maps where to remove world buffs
+local Config_WorldBuff = {}        -- spell IDs of world buffs to be removed
 
 -- on/off switch (0/1)
 Config.RaidActive = 1
@@ -33,39 +34,49 @@ Config.DungeonActive = 0
 Config.PvPActive = 1
 Config.NoWorldBuffMaps = 1
 
+Config.HpAuraSpellId = 89501
+Config.DamageDoneTaken = 89502
+Config.BaseStatAP = 89503
+
 
 -- all modifiers are in %
-ConfigRaid.baseStatModifier = -50
-ConfigRaid.meleeAPModifier = 0
-ConfigRaid.rangedAPModifier = -10
+ConfigRaid.baseStatModifier = 0
+ConfigRaid.meleeAPModifier = -10
+ConfigRaid.rangedAPModifier = -20
 ConfigRaid.DamageTaken = 50
-ConfigRaid.DamageDone = -50
+ConfigRaid.DamageDone = -60
+ConfigRaid.hpModifier = -20
 
-ConfigDungeon.baseStatModifier = -50
+ConfigDungeon.baseStatModifier = 0
 ConfigDungeon.meleeAPModifier = -10
 ConfigDungeon.rangedAPModifier = -20
 ConfigDungeon.DamageTaken = 50
-ConfigDungeon.DamageDone = -50
+ConfigDungeon.DamageDone = -60
+ConfigDungeon.hpModifier = -30
 
 ConfigPvP.DamageTaken = -20
 ConfigPvP.DamageDone = 0
 
--- all players in these zones will become debuffed on login, when entering and resurrecting
-table.insert(Config_DungeonZones, 2557) -- Dire Maul
-table.insert(Config_DungeonZones, 2057) -- Scholomance
-table.insert(Config_DungeonZones, 2279) -- Stratholme
+-- all players in these maps will become debuffed on login, when entering and resurrecting
+table.insert(Config_DungeonMaps, 429) -- Dire Maul
+table.insert(Config_DungeonMaps, 289) -- Scholomance
+table.insert(Config_DungeonMaps, 329) -- Stratholme
 
-table.insert(Config_RaidZones, 1583) -- Blackrock Spire
-table.insert(Config_RaidZones, 2717) -- Molten Core
+table.insert(Config_RaidMaps, 229) -- Blackrock Spire
+--table.insert(Config_RaidMaps, 409) -- Molten Core
+--table.insert(Config_RaidMaps, 469) -- Blackwing Lair
+--table.insert(Config_RaidMaps, 509) -- Ruins of Ahn'Qiraj
+--table.insert(Config_RaidMaps, 531) -- Temple of Ahn'Qiraj
+--table.insert(Config_RaidMaps, 309) -- Zul Gurub
 
-table.insert(Config_PvPZones, 3358) -- Arathi Basin
-table.insert(Config_PvPZones, 2597) -- Alterac Valley
-table.insert(Config_PvPZones, 3277) -- Warsong Gulch
-table.insert(Config_PvPZones, 4406) -- Ring of Valor
-table.insert(Config_PvPZones, 3968) -- Ruins of Lordaeron
-table.insert(Config_PvPZones, 3698) -- Ring of Trials
-table.insert(Config_PvPZones, 3702) -- Blade's Edge Arena
-table.insert(Config_PvPZones, 4378) -- Dalaran Arena
+table.insert(Config_PvPMaps, 529) -- Arathi Basin
+table.insert(Config_PvPMaps, 30) -- Alterac Valley
+table.insert(Config_PvPMaps, 489) -- Warsong Gulch
+table.insert(Config_PvPMaps, 618) -- Ring of Valor
+table.insert(Config_PvPMaps, 572) -- Ruins of Lordaeron
+table.insert(Config_PvPMaps, 559) -- Ring of Trials
+table.insert(Config_PvPMaps, 562) -- Blade's Edge Arena
+table.insert(Config_PvPMaps, 617) -- Dalaran Arena
 
 table.insert(Config_NoWorldBuffMaps, 409) -- Molten Core
 table.insert(Config_NoWorldBuffMaps, 469) -- Blackwing Lair
@@ -109,8 +120,12 @@ local function zd_shouldDebuffRaid(unit)
     if Config.RaidActive ~= 1 then
         return false
     else
-        local zone = unit:GetZoneId()
-        return has_value(Config_RaidZones, zone)
+        local mapId = unit:GetMap():GetMapId()
+        -- hardcoded check for LBRS RDF
+        if mapId == 229 and unit:HasAura(72221) then
+            return false
+        end
+        return has_value(Config_RaidMaps, mapId)
     end
 end
 
@@ -122,8 +137,8 @@ local function zd_shouldDebuffDungeon(unit)
         if unit:HasAura(72221) then
             return false
         end
-        local zone = unit:GetZoneId()
-        return has_value(Config_DungeonZones, zone)
+        local mapId = unit:GetMap():GetMapId()
+        return has_value(Config_DungeonMaps, mapId)
     end
 end
 
@@ -131,48 +146,54 @@ local function zd_shouldDebuffPvP(unit)
     if Config.PvPActive ~= 1 then
         return false
     else
-        local zone = unit:GetZoneId()
-        return has_value(Config_PvPZones, zone)
+        local mapId = unit:GetMap():GetMapId()
+        return has_value(Config_PvPMaps, mapId)
     end
 end
 
 local function zd_debuffRaid(player)
-    if not player:HasAura(63388) then
-        player:CastCustomSpell(player, 63388, false, ConfigRaid.baseStatModifier,ConfigRaid.meleeAPModifier,ConfigRaid.rangedAPModifier)
+    if not player:HasAura(Config.BaseStatAP) then
+        player:CastCustomSpell(player, Config.BaseStatAP, false, ConfigRaid.baseStatModifier,ConfigRaid.meleeAPModifier,ConfigRaid.rangedAPModifier)
     end
-    if not player:HasAura(72341) then
-        player:CastCustomSpell(player, 72341, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
+    if not player:HasAura(Config.DamageDoneTaken) then
+        player:CastCustomSpell(player, Config.DamageDoneTaken, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
+    end
+    if not player:HasAura(Config.HpAuraSpellId) then
+        player:CastCustomSpell(player, Config.HpAuraSpellId, false, ConfigRaid.hpModifier)
     end
 end
 
 local function zd_debuffDungeon(player)
-    if not player:HasAura(63388) then
-        player:CastCustomSpell(player, 63388, false, ConfigDungeon.baseStatModifier,ConfigDungeon.meleeAPModifier,ConfigDungeon.rangedAPModifier)
+    if not player:HasAura(Config.BaseStatAP) then
+        player:CastCustomSpell(player, Config.BaseStatAP, false, ConfigDungeon.baseStatModifier,ConfigDungeon.meleeAPModifier,ConfigDungeon.rangedAPModifier)
     end
-    if not player:HasAura(72341) then
-        player:CastCustomSpell(player, 72341, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
+    if not player:HasAura(Config.DamageDoneTaken) then
+        player:CastCustomSpell(player, Config.DamageDoneTaken, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
+    end
+    if not player:HasAura(Config.HpAuraSpellId) then
+        player:CastCustomSpell(player, Config.HpAuraSpellId, false, ConfigDungeon.hpModifier)
     end
 end
 
 local function zd_debuffPvP(player)
-    if not player:HasAura(72341) then
-        player:CastCustomSpell(player, 72341, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
+    if not player:HasAura(Config.DamageDoneTaken) then
+        player:CastCustomSpell(player, Config.DamageDoneTaken, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
     end
 end
 
 local function zd_debuffPetRaid(pet)
-    pet:CastCustomSpell(pet, 72341, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
+    pet:CastCustomSpell(pet, Config.DamageDoneTaken, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
 end
 
 local function zd_debuffPetDungeon(pet)
     if pet:GetOwner():HasAura(72221) then
         return false
     end
-    pet:CastCustomSpell(pet, 72341, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
+    pet:CastCustomSpell(pet, Config.DamageDoneTaken, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
 end
 
 local function zd_debuffPetPvP(pet)
-    pet:CastCustomSpell(pet, 72341, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
+    pet:CastCustomSpell(pet, Config.DamageDoneTaken, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
 end
 
 local function zd_removeWorldbuffs(player)
@@ -188,15 +209,16 @@ local function zd_removeWorldbuffsPet(pet)
 end
 
 local function zd_removeDebuff(player)
-    player:RemoveAura(63388)
-    player:RemoveAura(72341)
+    player:RemoveAura(Config.BaseStatAP)
+    player:RemoveAura(Config.DamageDoneTaken)
+    player:RemoveAura(Config.HpAuraSpellId)
 end
 
 local function zd_removeDebuffPet(pet)
-    pet:RemoveAura(72341)
+    pet:RemoveAura(Config.DamageDoneTaken)
 end
 
-local function zd_checkPlayerZone(player)
+local function zd_checkPlayerMap(player)
     if zd_shouldRemoveWorldBuff(player) then
         zd_removeWorldbuffs(player)
     end
@@ -214,7 +236,7 @@ local function zd_checkPlayerZone(player)
     end
 end
 
-local function zd_checkPetZone(pet)
+local function zd_checkPetMap(pet)
     if zd_shouldRemoveWorldBuff(pet) then
         zd_removeWorldbuffsPet(pet)
     end
@@ -232,25 +254,25 @@ local function zd_checkPetZone(pet)
     end
 end
 
-local function zd_checkZonePetSpawned(event, player, pet)
-    zd_checkPetZone(pet)
+local function zd_checkMapPetSpawned(event, player, pet)
+    zd_checkPetMap(pet)
 end
 
-local function zd_checkZoneLogin(event, player)
-    zd_checkPlayerZone(player)
+local function zd_checkMapLogin(event, player)
+    zd_checkPlayerMap(player)
 end
 
-local function zd_checkZoneUpdate(event, player, newZone, newArea)
-    zd_checkPlayerZone(player)
+local function zd_checkMapUpdate(event, player, newZone, newArea)
+    zd_checkPlayerMap(player)
 end
 
-local function zd_checkZoneResurrect(event, player)
-    zd_checkPlayerZone(player)
+local function zd_checkMapResurrect(event, player)
+    zd_checkPlayerMap(player)
 end
 
 if Config.RaidActive == 1 or Config.DungeonActive == 1 or Config.PvPActive == 1 or Config.NoWorldBuffMaps == 1 then
-    RegisterPlayerEvent(PLAYER_EVENT_ON_LOGIN, zd_checkZoneLogin)
-    RegisterPlayerEvent(PLAYER_EVENT_ON_MAP_CHANGE, zd_checkZoneUpdate)
-    RegisterPlayerEvent(PLAYER_EVENT_ON_PET_SPAWNED, zd_checkZonePetSpawned)
-    RegisterPlayerEvent(PLAYER_EVENT_ON_RESURRECT,zd_checkZoneResurrect)
+    RegisterPlayerEvent(PLAYER_EVENT_ON_LOGIN, zd_checkMapLogin)
+    RegisterPlayerEvent(PLAYER_EVENT_ON_MAP_CHANGE, zd_checkMapUpdate)
+    RegisterPlayerEvent(PLAYER_EVENT_ON_PET_SPAWNED, zd_checkMapPetSpawned)
+    RegisterPlayerEvent(PLAYER_EVENT_ON_RESURRECT,zd_checkMapResurrect)
 end
