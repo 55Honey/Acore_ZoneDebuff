@@ -41,12 +41,12 @@ Config.RageFromDamage = 89504
 
 
 -- all modifiers are in %
-ConfigRaid.baseStatModifier = 0
+ConfigRaid.baseStatModifier = -30
 ConfigRaid.meleeAPModifier = -10
 ConfigRaid.rangedAPModifier = -20
-ConfigRaid.DamageTaken = 50
+ConfigRaid.DamageTaken = 200
 ConfigRaid.DamageDone = -60
-ConfigRaid.hpModifier = -20
+ConfigRaid.hpModifier = 0
 ConfigRaid.RageFromDamage = 30
 
 ConfigDungeon.baseStatModifier = 0
