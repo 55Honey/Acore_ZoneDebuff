@@ -37,15 +37,17 @@ Config.NoWorldBuffMaps = 1
 Config.HpAuraSpellId = 89501
 Config.DamageDoneTaken = 89502
 Config.BaseStatAP = 89503
+Config.RageFromDamage = 89504
 
 
 -- all modifiers are in %
-ConfigRaid.baseStatModifier = 0
+ConfigRaid.baseStatModifier = -30
 ConfigRaid.meleeAPModifier = -10
 ConfigRaid.rangedAPModifier = -20
-ConfigRaid.DamageTaken = 50
+ConfigRaid.DamageTaken = 200
 ConfigRaid.DamageDone = -60
-ConfigRaid.hpModifier = -20
+ConfigRaid.hpModifier = 0
+ConfigRaid.RageFromDamage = 30
 
 ConfigDungeon.baseStatModifier = 0
 ConfigDungeon.meleeAPModifier = -10
@@ -53,6 +55,7 @@ ConfigDungeon.rangedAPModifier = -20
 ConfigDungeon.DamageTaken = 50
 ConfigDungeon.DamageDone = -60
 ConfigDungeon.hpModifier = -30
+ConfigDungeon.RageFromDamage = 10
 
 ConfigPvP.DamageTaken = -20
 ConfigPvP.DamageDone = 0
@@ -161,6 +164,9 @@ local function zd_debuffRaid(player)
     if not player:HasAura(Config.HpAuraSpellId) then
         player:CastCustomSpell(player, Config.HpAuraSpellId, false, ConfigRaid.hpModifier)
     end
+    if not player:HasAura(Config.RageFromDamage) then
+        player:CastCustomSpell(player, Config.RageFromDamage, false, ConfigRaid.RageFromDamage)
+    end
 end
 
 local function zd_debuffDungeon(player)
@@ -172,6 +178,9 @@ local function zd_debuffDungeon(player)
     end
     if not player:HasAura(Config.HpAuraSpellId) then
         player:CastCustomSpell(player, Config.HpAuraSpellId, false, ConfigDungeon.hpModifier)
+    end
+    if not player:HasAura(Config.RageFromDamage) then
+        player:CastCustomSpell(player, Config.RageFromDamage, false, ConfigDungeon.RageFromDamage)
     end
 end
 
@@ -212,6 +221,7 @@ local function zd_removeDebuff(player)
     player:RemoveAura(Config.BaseStatAP)
     player:RemoveAura(Config.DamageDoneTaken)
     player:RemoveAura(Config.HpAuraSpellId)
+    player:RemoveAura(Config.RageFromDamage)
 end
 
 local function zd_removeDebuffPet(pet)
