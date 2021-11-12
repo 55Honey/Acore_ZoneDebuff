@@ -119,13 +119,26 @@ local function zd_shouldRemoveWorldBuff(unit)
     end
 end
 
-local function zd_shouldDebuffRaid(unit)
+local function zd_shouldDebuffRaid(player)
     if Config.RaidActive ~= 1 then
         return false
     else
-        local mapId = unit:GetMap():GetMapId()
+        local mapId = player:GetMap():GetMapId()
         -- hardcoded check for LBRS RDF
-        if mapId == 229 and unit:HasAura(72221) then
+        if mapId == 229 and player:GetGroup():IsLFGGroup() == false then
+            return false
+        end
+        return has_value(Config_RaidMaps, mapId)
+    end
+end
+
+local function zd_shouldDebuffRaidPet(pet)
+    if Config.RaidActive ~= 1 then
+        return false
+    else
+        local mapId = pet:GetMap():GetMapId()
+        -- hardcoded check for LBRS RDF
+        if mapId == 229 and pet:GetOwner():GetGroup():IsLFGGroup() == false then
             return false
         end
         return has_value(Config_RaidMaps, mapId)
@@ -137,7 +150,7 @@ local function zd_shouldDebuffDungeon(unit)
         return false
     else
         --Check for RDF buff (Luck of the Draw)
-        if unit:HasAura(72221) then
+        if unit:GetGroup():IsLFGGroup() == false then
             return false
         end
         local mapId = unit:GetMap():GetMapId()
@@ -190,7 +203,7 @@ local function zd_debuffPvP(player)
     end
 end
 
-local function zd_debuffPetRaid(pet)
+local function zd_debuffRaidPet(pet)
     pet:CastCustomSpell(pet, Config.DamageDoneTaken, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
 end
 
@@ -250,9 +263,9 @@ local function zd_checkPetMap(pet)
     if zd_shouldRemoveWorldBuff(pet) then
         zd_removeWorldbuffsPet(pet)
     end
-    if zd_shouldDebuffRaid(pet) then
+    if zd_shouldDebuffRaidPet(pet) then
         zd_removeDebuffPet(pet)
-        zd_debuffPetRaid(pet)
+        zd_debuffRaidPet(pet)
     elseif zd_shouldDebuffDungeon(pet) then
         zd_removeDebuffPet(pet)
         zd_debuffPetDungeon(pet)
