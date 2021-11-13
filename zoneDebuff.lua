@@ -87,9 +87,14 @@ table.insert(Config_NoWorldBuffMaps, 509) -- Ruins of Ahn'Qiraj
 table.insert(Config_NoWorldBuffMaps, 531) -- Temple of Ahn'Qiraj
 table.insert(Config_NoWorldBuffMaps, 309) -- Zul Gurub
 
+table.insert(Config_WorldBuff, 15366) -- Songflower Serenade
 table.insert(Config_WorldBuff, 16609) -- Warchiefs Blessing
 table.insert(Config_WorldBuff, 22888) -- Rallying Cry of the Dragonslayer
 table.insert(Config_WorldBuff, 24425) -- Spirit of Zandalar
+table.insert(Config_WorldBuff, 22817) -- Fengus' Ferocity
+table.insert(Config_WorldBuff, 22818) -- Mol'dar's Moxie
+table.insert(Config_WorldBuff, 22820) -- Slip'kik's Savvy
+
 
 
 ------------------------------------------
