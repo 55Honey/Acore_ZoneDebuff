@@ -81,6 +81,7 @@ table.insert(Config_PvPMaps, 559) -- Ring of Trials
 table.insert(Config_PvPMaps, 562) -- Blade's Edge Arena
 table.insert(Config_PvPMaps, 617) -- Dalaran Arena
 
+table.insert(Config_NoWorldBuffMaps, 229) -- Blackrock Spire
 table.insert(Config_NoWorldBuffMaps, 409) -- Molten Core
 table.insert(Config_NoWorldBuffMaps, 469) -- Blackwing Lair
 table.insert(Config_NoWorldBuffMaps, 509) -- Ruins of Ahn'Qiraj
