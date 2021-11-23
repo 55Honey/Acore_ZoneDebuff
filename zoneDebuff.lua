@@ -38,7 +38,7 @@ Config.HpAuraSpellId = 89501
 Config.DamageDoneTaken = 89502
 Config.BaseStatAP = 89503
 Config.RageFromDamage = 89504
-Config.Absorb = 89505
+Config.HealAndAbsorb = 89505
 
 
 -- all modifiers are in %
@@ -49,7 +49,7 @@ ConfigRaid.DamageTaken = 150
 ConfigRaid.DamageDone = -65
 ConfigRaid.hpModifier = -20
 ConfigRaid.RageFromDamage = 25
-ConfigRaid.Absorb = 15
+ConfigRaid.HealAndAbsorb = -30
 
 ConfigDungeon.baseStatModifier = 0
 ConfigDungeon.meleeAPModifier = -10
@@ -58,7 +58,7 @@ ConfigDungeon.DamageTaken = 50
 ConfigDungeon.DamageDone = -60
 ConfigDungeon.hpModifier = -30
 ConfigDungeon.RageFromDamage = 10
-ConfigDungeon.Absorb = 0
+ConfigDungeon.HealAndAbsorb = 0
 
 ConfigPvP.DamageTaken = -20
 ConfigPvP.DamageDone = 0
@@ -193,8 +193,8 @@ local function zd_debuffRaid(player)
     if not player:HasAura(Config.RageFromDamage) then
         player:CastCustomSpell(player, Config.RageFromDamage, false, ConfigRaid.RageFromDamage)
     end
-    if not player:HasAura(Config.Absorb) then
-        player:CastCustomSpell(player, Config.Absorb, false, ConfigRaid.Absorb)
+    if not player:HasAura(Config.HealAndAbsorb) then
+        player:CastCustomSpell(player, Config.HealAndAbsorb, false, ConfigRaid.HealAndAbsorb)
     end
 end
 
@@ -211,8 +211,8 @@ local function zd_debuffDungeon(player)
     if not player:HasAura(Config.RageFromDamage) then
         player:CastCustomSpell(player, Config.RageFromDamage, false, ConfigDungeon.RageFromDamage)
     end
-    if not player:HasAura(Config.Absorb) then
-        player:CastCustomSpell(player, Config.Absorb, false, ConfigDungeon.Absorb)
+    if not player:HasAura(Config.HealAndAbsorb) then
+        player:CastCustomSpell(player, Config.HealAndAbsorb, false, ConfigDungeon.HealAndAbsorb)
     end
 end
 
@@ -254,7 +254,7 @@ local function zd_removeDebuff(player)
     player:RemoveAura(Config.DamageDoneTaken)
     player:RemoveAura(Config.HpAuraSpellId)
     player:RemoveAura(Config.RageFromDamage)
-    player:RemoveAura(Config.Absorb)
+    player:RemoveAura(Config.HealAndAbsorb)
 end
 
 local function zd_removeDebuffPet(pet)
