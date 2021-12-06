@@ -45,6 +45,12 @@ Config.RageFromDamageSpell = 89504
 Config.AbsorbSpell = 89505
 Config.HealingDoneSpell = 89506
 
+--set to nil to prevent visual
+Config.VisualSpellRaid = 71367
+Config.VisualSpellDungeon = nil
+
+Config.DebuffMessageRaid = "Chromie's time-traveling spell does impact your powers. You feel weak."
+Config.DebuffMessageDungeon = "Chromie's time-traveling spell does impact your powers. You feel weak."
 
 -- all modifiers are in %
 ConfigRaid.baseStatModifier = 0
@@ -206,6 +212,12 @@ local function zd_debuffRaid(player)
     if not player:HasAura(Config.HealingDoneSpell) then
         player:CastCustomSpell(player, Config.HealingDoneSpell, false, ConfigRaid.HealingDoneModifier)
     end
+    if Config.VisualSpellRaid ~= nil then
+        if not player:HasAura(Config.VisualSpellRaid) then
+            player:CastSpell(player, Config.VisualSpellRaid, false)
+        end
+    end
+    player:SendBroadcastMessage(Config.DebuffMessageRaid)
 end
 
 local function zd_debuffDungeon(player)
@@ -227,6 +239,12 @@ local function zd_debuffDungeon(player)
     if not player:HasAura(Config.HealingDoneSpell) then
         player:CastCustomSpell(player, Config.HealingDoneSpell, false, ConfigDungeon.HealingDoneModifier)
     end
+    if Config.VisualSpellDungeon ~= nil then
+        if not player:HasAura(Config.VisualSpellDungeon) then
+            player:CastSpell(player, Config.VisualSpellDungeon, false)
+        end
+    end
+    player:SendBroadcastMessage(Config.DebuffMessageDungeon)
 end
 
 local function zd_debuffPvP(player)
@@ -267,7 +285,10 @@ local function zd_removeDebuff(player)
     player:RemoveAura(Config.DamageDoneTakenSpell)
     player:RemoveAura(Config.HpAuraSpell)
     player:RemoveAura(Config.RageFromDamageSpell)
+    player:RemoveAura(Config.AbsorbSpell)
     player:RemoveAura(Config.HealingDoneSpell)
+    player:RemoveAura(Config.VisualSpellRaid)
+    player:RemoveAura(Config.VisualSpellDungeon)
 end
 
 local function zd_removeDebuffPet(pet)
