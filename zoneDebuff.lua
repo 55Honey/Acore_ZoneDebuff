@@ -75,13 +75,12 @@ table.insert(Config_DungeonMaps, 429) -- Dire Maul
 table.insert(Config_DungeonMaps, 289) -- Scholomance
 table.insert(Config_DungeonMaps, 329) -- Stratholme
 
---indexing may not have gaps. You can not comment a line in the middle.
-Config_RaidMaps[1] = 229 -- Blackrock Spire
---Config_RaidMaps[2] = 409 -- Molten Core
---Config_RaidMaps[3] = 469 -- Blackwing Lair
---Config_RaidMaps[4] = 509 -- Ruins of Ahn'Qiraj
---Config_RaidMaps[5] = 531 -- Temple of Ahn'Qiraj
---Config_RaidMaps[6] = 309 -- Zul Gurub
+table.insert(Config_RaidMaps, 229) -- Blackrock Spire
+--table.insert(Config_RaidMaps, 409) -- Molten Core
+--table.insert(Config_RaidMaps, 469) -- Blackwing Lair
+--table.insert(Config_RaidMaps, 509) -- Ruins of Ahn'Qiraj
+--table.insert(Config_RaidMaps, 531) -- Temple of Ahn'Qiraj
+--table.insert(Config_RaidMaps, 309) -- Zul Gurub
 
 table.insert(Config_PvPMaps, 529) -- Arathi Basin
 table.insert(Config_PvPMaps, 30) -- Alterac Valley
