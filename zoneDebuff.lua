@@ -34,11 +34,16 @@ Config.DungeonActive = 0
 Config.PvPActive = 1
 Config.NoWorldBuffMaps = 1
 
-Config.HpAuraSpellId = 89501
-Config.DamageDoneTaken = 89502
-Config.BaseStatAP = 89503
-Config.RageFromDamage = 89504
-Config.HealAndAbsorb = 89505
+Config.debuffedMessageRaid = ''
+Config.debuffedMessageDungeon = ''
+Config.debuffedMessagePvP = ''
+
+Config.HpAuraSpell = 89501
+Config.DamageDoneTakenSpell = 89502
+Config.BaseStatAPSpell = 89503
+Config.RageFromDamageSpell = 89504
+Config.AbsorbSpell = 89505
+Config.HealingDoneSpell = 89506
 
 
 -- all modifiers are in %
@@ -46,10 +51,11 @@ ConfigRaid.baseStatModifier = 0
 ConfigRaid.meleeAPModifier = 0
 ConfigRaid.rangedAPModifier = 0
 ConfigRaid.DamageTaken = 150
-ConfigRaid.DamageDone = -65
+ConfigRaid.DamageDoneModifier = -65
 ConfigRaid.hpModifier = -20
-ConfigRaid.RageFromDamage = 25
-ConfigRaid.HealAndAbsorb = -30
+ConfigRaid.RageFromDamageModifier = 25
+ConfigRaid.AbsorbModifier = -30
+ConfigRaid.HealingDoneModifier = -30
 
 ConfigDungeon.baseStatModifier = 0
 ConfigDungeon.meleeAPModifier = -10
@@ -58,7 +64,8 @@ ConfigDungeon.DamageTaken = 50
 ConfigDungeon.DamageDone = -60
 ConfigDungeon.hpModifier = -30
 ConfigDungeon.RageFromDamage = 10
-ConfigDungeon.HealAndAbsorb = 0
+ConfigDungeon.Absorb = 0
+ConfigDungeon.HealingDone = 0
 
 ConfigPvP.DamageTaken = -20
 ConfigPvP.DamageDone = 0
@@ -68,12 +75,13 @@ table.insert(Config_DungeonMaps, 429) -- Dire Maul
 table.insert(Config_DungeonMaps, 289) -- Scholomance
 table.insert(Config_DungeonMaps, 329) -- Stratholme
 
-table.insert(Config_RaidMaps, 229) -- Blackrock Spire
---table.insert(Config_RaidMaps, 409) -- Molten Core
---table.insert(Config_RaidMaps, 469) -- Blackwing Lair
---table.insert(Config_RaidMaps, 509) -- Ruins of Ahn'Qiraj
---table.insert(Config_RaidMaps, 531) -- Temple of Ahn'Qiraj
---table.insert(Config_RaidMaps, 309) -- Zul Gurub
+--indexing may not have gaps. You can not comment a line in the middle.
+Config_RaidMaps[1] = 229 -- Blackrock Spire
+--Config_RaidMaps[2] = 409 -- Molten Core
+--Config_RaidMaps[3] = 469 -- Blackwing Lair
+--Config_RaidMaps[4] = 509 -- Ruins of Ahn'Qiraj
+--Config_RaidMaps[5] = 531 -- Temple of Ahn'Qiraj
+--Config_RaidMaps[6] = 309 -- Zul Gurub
 
 table.insert(Config_PvPMaps, 529) -- Arathi Basin
 table.insert(Config_PvPMaps, 30) -- Alterac Valley
@@ -181,60 +189,66 @@ local function zd_shouldDebuffPvP(unit)
 end
 
 local function zd_debuffRaid(player)
-    if not player:HasAura(Config.BaseStatAP) then
-        player:CastCustomSpell(player, Config.BaseStatAP, false, ConfigRaid.baseStatModifier,ConfigRaid.meleeAPModifier,ConfigRaid.rangedAPModifier)
+    if not player:HasAura(Config.BaseStatAPSpell) then
+        player:CastCustomSpell(player, Config.BaseStatAPSpell, false, ConfigRaid.baseStatModifier,ConfigRaid.meleeAPModifier,ConfigRaid.rangedAPModifier)
     end
-    if not player:HasAura(Config.DamageDoneTaken) then
-        player:CastCustomSpell(player, Config.DamageDoneTaken, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
+    if not player:HasAura(Config.DamageDoneTakenSpell) then
+        player:CastCustomSpell(player, Config.DamageDoneTakenSpell, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDoneModifier)
     end
-    if not player:HasAura(Config.HpAuraSpellId) then
-        player:CastCustomSpell(player, Config.HpAuraSpellId, false, ConfigRaid.hpModifier)
+    if not player:HasAura(Config.HpAuraSpell) then
+        player:CastCustomSpell(player, Config.HpAuraSpell, false, ConfigRaid.hpModifier)
     end
-    if not player:HasAura(Config.RageFromDamage) then
-        player:CastCustomSpell(player, Config.RageFromDamage, false, ConfigRaid.RageFromDamage)
+    if not player:HasAura(Config.RageFromDamageSpell) then
+        player:CastCustomSpell(player, Config.RageFromDamageSpell, false, ConfigRaid.RageFromDamageModifier)
     end
-    if not player:HasAura(Config.HealAndAbsorb) then
-        player:CastCustomSpell(player, Config.HealAndAbsorb, false, ConfigRaid.HealAndAbsorb)
+    if not player:HasAura(Config.AbsorbSpell) then
+        player:CastCustomSpell(player, Config.AbsorbSpell, false, ConfigRaid.AbsorbModifier)
+    end
+    if not player:HasAura(Config.HealingDoneSpell) then
+        player:CastCustomSpell(player, Config.HealingDoneSpell, false, ConfigRaid.HealingDoneModifier)
     end
 end
 
 local function zd_debuffDungeon(player)
-    if not player:HasAura(Config.BaseStatAP) then
-        player:CastCustomSpell(player, Config.BaseStatAP, false, ConfigDungeon.baseStatModifier,ConfigDungeon.meleeAPModifier,ConfigDungeon.rangedAPModifier)
+    if not player:HasAura(Config.BaseStatAPSpell) then
+        player:CastCustomSpell(player, Config.BaseStatAPSpell, false, ConfigDungeon.baseStatModifier,ConfigDungeon.meleeAPModifier,ConfigDungeon.rangedAPModifier)
     end
-    if not player:HasAura(Config.DamageDoneTaken) then
-        player:CastCustomSpell(player, Config.DamageDoneTaken, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
+    if not player:HasAura(Config.DamageDoneTakenSpell) then
+        player:CastCustomSpell(player, Config.DamageDoneTakenSpell, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
     end
-    if not player:HasAura(Config.HpAuraSpellId) then
-        player:CastCustomSpell(player, Config.HpAuraSpellId, false, ConfigDungeon.hpModifier)
+    if not player:HasAura(Config.HpAuraSpell) then
+        player:CastCustomSpell(player, Config.HpAuraSpell, false, ConfigDungeon.hpModifier)
     end
-    if not player:HasAura(Config.RageFromDamage) then
-        player:CastCustomSpell(player, Config.RageFromDamage, false, ConfigDungeon.RageFromDamage)
+    if not player:HasAura(Config.RageFromDamageSpell) then
+        player:CastCustomSpell(player, Config.RageFromDamageSpell, false, ConfigDungeon.RageFromDamage)
     end
-    if not player:HasAura(Config.HealAndAbsorb) then
-        player:CastCustomSpell(player, Config.HealAndAbsorb, false, ConfigDungeon.HealAndAbsorb)
+    if not player:HasAura(Config.AbsorbSpell) then
+        player:CastCustomSpell(player, Config.AbsorbSpell, false, ConfigDungeon.AbsorbModifier)
+    end
+    if not player:HasAura(Config.HealingDoneSpell) then
+        player:CastCustomSpell(player, Config.HealingDoneSpell, false, ConfigDungeon.HealingDoneModifier)
     end
 end
 
 local function zd_debuffPvP(player)
-    if not player:HasAura(Config.DamageDoneTaken) then
-        player:CastCustomSpell(player, Config.DamageDoneTaken, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
+    if not player:HasAura(Config.DamageDoneTakenSpell) then
+        player:CastCustomSpell(player, Config.DamageDoneTakenSpell, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
     end
 end
 
 local function zd_debuffRaidPet(pet)
-    pet:CastCustomSpell(pet, Config.DamageDoneTaken, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDone)
+    pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDoneModifier)
 end
 
 local function zd_debuffPetDungeon(pet)
     if pet:GetOwner():HasAura(72221) then
         return false
     end
-    pet:CastCustomSpell(pet, Config.DamageDoneTaken, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
+    pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
 end
 
 local function zd_debuffPetPvP(pet)
-    pet:CastCustomSpell(pet, Config.DamageDoneTaken, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
+    pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
 end
 
 local function zd_removeWorldbuffs(player)
@@ -250,15 +264,15 @@ local function zd_removeWorldbuffsPet(pet)
 end
 
 local function zd_removeDebuff(player)
-    player:RemoveAura(Config.BaseStatAP)
-    player:RemoveAura(Config.DamageDoneTaken)
-    player:RemoveAura(Config.HpAuraSpellId)
-    player:RemoveAura(Config.RageFromDamage)
-    player:RemoveAura(Config.HealAndAbsorb)
+    player:RemoveAura(Config.BaseStatAPSpell)
+    player:RemoveAura(Config.DamageDoneTakenSpell)
+    player:RemoveAura(Config.HpAuraSpell)
+    player:RemoveAura(Config.RageFromDamageSpell)
+    player:RemoveAura(Config.HealingDoneSpell)
 end
 
 local function zd_removeDebuffPet(pet)
-    pet:RemoveAura(Config.DamageDoneTaken)
+    pet:RemoveAura(Config.DamageDoneTakenSpell)
 end
 
 local function zd_checkPlayerMap(player)
