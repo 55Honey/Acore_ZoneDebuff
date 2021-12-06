@@ -49,8 +49,8 @@ Config.HealingDoneSpell = 89506
 Config.VisualSpellRaid = 71367
 Config.VisualSpellDungeon = nil
 
-Config.DebuffMessageRaid = "Chromie's time-traveling spell does impact your powers. You feel weak."
-Config.DebuffMessageDungeon = "Chromie's time-traveling spell does impact your powers. You feel weak."
+Config.DebuffMessageRaid = 'Chromies time-travelling spell impacts your powers. You feel weakened.'
+Config.DebuffMessageDungeon = 'Chromies time-travelling spell impacts your powers. You feel weakened.'
 
 -- all modifiers are in %
 ConfigRaid.baseStatModifier = 0
