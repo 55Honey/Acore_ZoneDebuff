@@ -287,8 +287,12 @@ local function zd_removeDebuff(player)
     player:RemoveAura(Config.RageFromDamageSpell)
     player:RemoveAura(Config.AbsorbSpell)
     player:RemoveAura(Config.HealingDoneSpell)
-    player:RemoveAura(Config.VisualSpellRaid)
-    player:RemoveAura(Config.VisualSpellDungeon)
+    if Config.VisualSpellRaid ~= nil then
+        player:RemoveAura(Config.VisualSpellRaid)
+    end
+    if Config.VisualSpellDungeon ~= nil then
+        player:RemoveAura(Config.VisualSpellDungeon)
+    end
 end
 
 local function zd_removeDebuffPet(pet)
