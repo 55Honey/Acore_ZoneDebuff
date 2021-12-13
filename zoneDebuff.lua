@@ -111,8 +111,7 @@ table.insert(Config_WorldBuff, 24425) -- Spirit of Zandalar
 table.insert(Config_WorldBuff, 22817) -- Fengus' Ferocity
 table.insert(Config_WorldBuff, 22818) -- Mol'dar's Moxie
 table.insert(Config_WorldBuff, 22820) -- Slip'kik's Savvy
-
-
+table.insert(Config_WorldBuff, 15123) -- Resist Fire from Scarshield Spellbinder
 
 ------------------------------------------
 -- NO ADJUSTMENTS REQUIRED BELOW THIS LINE
