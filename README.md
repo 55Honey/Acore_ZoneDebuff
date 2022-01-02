@@ -9,6 +9,8 @@ The ElunaLua module itself usually doesn't require much setup/config. Just speci
 
 If the directory was not changed in the ElunaLua config, add the .lua script to your `../lua_scripts/` directory as a subfolder of the worldserver.
 
+The hook which alters absorb effects might not exist in the default Azerothcore.
+
 ## Admin Usage:
 - Adjust the config flags and IDs in the `.lua` files. Each file has it's own list of zones.
 - Apply the .sql in `../database/world/` for the custom spell effects
