@@ -54,7 +54,7 @@ Config.AbsorbSpell = 89505
 Config.HealingDoneSpell = 89506
 
 --set to nil to prevent visual
-Config.VisualSpellRaid = 71367
+Config.VisualSpellRaid = nil -- 71367 = Fire Prison
 Config.VisualSpellDungeon = nil
 
 Config.DebuffMessageRaid = 'Chromies time-travelling spell impacts your powers. You feel weakened.'
