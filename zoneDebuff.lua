@@ -19,7 +19,15 @@
 -- GM GUIDE:     -  nothing to do. Just watch them suffer.
 ------------------------------------------------------------------------------------------------
 local Config = {}
-local ConfigRaid = {}
+local ConfigRaid_baseStatModifier = {}
+local ConfigRaid_meleeAPModifier = {}
+local ConfigRaid_rangedAPModifier = {}
+local ConfigRaid_DamageTaken = {}
+local ConfigRaid_DamageDoneModifier = {}
+local ConfigRaid_hpModifier = {}
+local ConfigRaid_RageFromDamageModifier = {}
+local ConfigRaid_AbsorbModifier = {}
+local ConfigRaid_HealingDoneModifier = {}
 local ConfigDungeon = {}
 local ConfigPvP = {}
 local Config_RaidMaps = {}         -- maps where to debuff players always for PvE
@@ -46,22 +54,34 @@ Config.AbsorbSpell = 89505
 Config.HealingDoneSpell = 89506
 
 --set to nil to prevent visual
-Config.VisualSpellRaid = 71367
+Config.VisualSpellRaid = nil -- 71367 = Fire Prison
 Config.VisualSpellDungeon = nil
 
 Config.DebuffMessageRaid = 'Chromies time-travelling spell impacts your powers. You feel weakened.'
 Config.DebuffMessageDungeon = 'Chromies time-travelling spell impacts your powers. You feel weakened.'
 
 -- all modifiers are in %
-ConfigRaid.baseStatModifier = 0
-ConfigRaid.meleeAPModifier = 0
-ConfigRaid.rangedAPModifier = 0
-ConfigRaid.DamageTaken = 150
-ConfigRaid.DamageDoneModifier = -65
-ConfigRaid.hpModifier = -20
-ConfigRaid.RageFromDamageModifier = 25
-ConfigRaid.AbsorbModifier = -30
-ConfigRaid.HealingDoneModifier = -30
+-- UBRS [229]
+ConfigRaid_baseStatModifier[229] = 0
+ConfigRaid_meleeAPModifier[229] = 0
+ConfigRaid_rangedAPModifier[229] = 0
+ConfigRaid_DamageTaken[229] = 100
+ConfigRaid_DamageDoneModifier[229] = 0
+ConfigRaid_hpModifier[229] = 0
+ConfigRaid_RageFromDamageModifier[229] = 0
+ConfigRaid_AbsorbModifier[229] = 0
+ConfigRaid_HealingDoneModifier[229] = 0
+
+-- MC [409]
+ConfigRaid_baseStatModifier[409] = 0
+ConfigRaid_meleeAPModifier[409] = 0
+ConfigRaid_rangedAPModifier[409] = 0
+ConfigRaid_DamageTaken[409] = 50
+ConfigRaid_DamageDoneModifier[409] = 0
+ConfigRaid_hpModifier[409] = 0
+ConfigRaid_RageFromDamageModifier[409] = 0
+ConfigRaid_AbsorbModifier[409] = -50
+ConfigRaid_HealingDoneModifier[409] = -50
 
 ConfigDungeon.baseStatModifier = 0
 ConfigDungeon.meleeAPModifier = -10
@@ -82,7 +102,7 @@ table.insert(Config_DungeonMaps, 289) -- Scholomance
 table.insert(Config_DungeonMaps, 329) -- Stratholme
 
 table.insert(Config_RaidMaps, 229) -- Blackrock Spire
---table.insert(Config_RaidMaps, 409) -- Molten Core
+table.insert(Config_RaidMaps, 409) -- Molten Core
 --table.insert(Config_RaidMaps, 469) -- Blackwing Lair
 --table.insert(Config_RaidMaps, 509) -- Ruins of Ahn'Qiraj
 --table.insert(Config_RaidMaps, 531) -- Temple of Ahn'Qiraj
@@ -170,15 +190,28 @@ local function zd_shouldDebuffRaidPet(pet)
     end
 end
 
-local function zd_shouldDebuffDungeon(unit)
+local function zd_shouldDebuffDungeon(player)
     if Config.DungeonActive ~= 1 then
         return false
     else
-        --Check for RDF buff (Luck of the Draw)
-        if unit:GetGroup():IsLFGGroup() == true then
+        --Check for RDF
+        if player:GetGroup():IsLFGGroup() == true then
             return false
         end
-        local mapId = unit:GetMap():GetMapId()
+        local mapId = player:GetMap():GetMapId()
+        return has_value(Config_DungeonMaps, mapId)
+    end
+end
+
+local function zd_shouldDebuffDungeonPet(pet)
+    if Config.DungeonActive ~= 1 then
+        return false
+    else
+        --Check for RDF
+        if pet:GetOwner():GetGroup():IsLFGGroup() == true then
+            return false
+        end
+        local mapId = pet:GetMap():GetMapId()
         return has_value(Config_DungeonMaps, mapId)
     end
 end
@@ -193,23 +226,24 @@ local function zd_shouldDebuffPvP(unit)
 end
 
 local function zd_debuffRaid(player)
+    local mapId = player:GetMap():GetMapId()
     if not player:HasAura(Config.BaseStatAPSpell) then
-        player:CastCustomSpell(player, Config.BaseStatAPSpell, false, ConfigRaid.baseStatModifier,ConfigRaid.meleeAPModifier,ConfigRaid.rangedAPModifier)
+        player:CastCustomSpell(player, Config.BaseStatAPSpell, false, ConfigRaid_baseStatModifier[mapId],ConfigRaid_meleeAPModifier[mapId],ConfigRaid_rangedAPModifier[mapId])
     end
     if not player:HasAura(Config.DamageDoneTakenSpell) then
-        player:CastCustomSpell(player, Config.DamageDoneTakenSpell, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDoneModifier)
+        player:CastCustomSpell(player, Config.DamageDoneTakenSpell, false, ConfigRaid_DamageTaken[mapId],ConfigRaid_DamageDoneModifier[mapId])
     end
     if not player:HasAura(Config.HpAuraSpell) then
-        player:CastCustomSpell(player, Config.HpAuraSpell, false, ConfigRaid.hpModifier)
+        player:CastCustomSpell(player, Config.HpAuraSpell, false, ConfigRaid_hpModifier[mapId])
     end
     if not player:HasAura(Config.RageFromDamageSpell) then
-        player:CastCustomSpell(player, Config.RageFromDamageSpell, false, ConfigRaid.RageFromDamageModifier)
+        player:CastCustomSpell(player, Config.RageFromDamageSpell, false, ConfigRaid_RageFromDamageModifier[mapId])
     end
     if not player:HasAura(Config.AbsorbSpell) then
-        player:CastCustomSpell(player, Config.AbsorbSpell, false, ConfigRaid.AbsorbModifier)
+        player:CastCustomSpell(player, Config.AbsorbSpell, false, ConfigRaid_AbsorbModifier[mapId])
     end
     if not player:HasAura(Config.HealingDoneSpell) then
-        player:CastCustomSpell(player, Config.HealingDoneSpell, false, ConfigRaid.HealingDoneModifier)
+        player:CastCustomSpell(player, Config.HealingDoneSpell, false, ConfigRaid_HealingDoneModifier[mapId])
     end
     if Config.VisualSpellRaid ~= nil then
         if not player:HasAura(Config.VisualSpellRaid) then
@@ -253,13 +287,11 @@ local function zd_debuffPvP(player)
 end
 
 local function zd_debuffRaidPet(pet)
-    pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigRaid.DamageTaken,ConfigRaid.DamageDoneModifier)
+    local mapId = pet:GetMap():GetMapId()
+    pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigRaid_DamageTaken[mapId],ConfigRaid_DamageDoneModifier[mapId])
 end
 
 local function zd_debuffPetDungeon(pet)
-    if pet:GetOwner():HasAura(72221) then
-        return false
-    end
     pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
 end
 
@@ -323,7 +355,7 @@ local function zd_checkPetMap(pet)
     if zd_shouldDebuffRaidPet(pet) then
         zd_removeDebuffPet(pet)
         zd_debuffRaidPet(pet)
-    elseif zd_shouldDebuffDungeon(pet) then
+    elseif zd_shouldDebuffDungeonPet(pet) then
         zd_removeDebuffPet(pet)
         zd_debuffPetDungeon(pet)
     elseif zd_shouldDebuffPvP(pet) then
