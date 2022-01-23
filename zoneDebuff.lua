@@ -111,15 +111,15 @@ ConfigMap_AbsorbModifier[529] = -20
 ConfigMap_HealingDoneModifier[529] = -20
 
 -- Ring of Trials [559]
-ConfigMap_baseStatModifier[559]] = 0
-ConfigMap_meleeAPModifier[559]] = 0
-ConfigMap_rangedAPModifier[559]] = 0
-ConfigMap_DamageTaken[559]] = -30
-ConfigMap_DamageDoneModifier[559]] = 0
-ConfigMap_hpModifier[559]] = 0
-ConfigMap_RageFromDamageModifier[559]] = 10
-ConfigMap_AbsorbModifier[559]] = -20
-ConfigMap_HealingDoneModifier[559]] = -20
+ConfigMap_baseStatModifier[559] = 0
+ConfigMap_meleeAPModifier[559] = 0
+ConfigMap_rangedAPModifier[559] = 0
+ConfigMap_DamageTaken[559] = -30
+ConfigMap_DamageDoneModifier[559] = 0
+ConfigMap_hpModifier[559] = 0
+ConfigMap_RageFromDamageModifier[559] = 10
+ConfigMap_AbsorbModifier[559] = -20
+ConfigMap_HealingDoneModifier[559] = -20
 
 -- Blade's Edge Arena [562]
 ConfigMap_baseStatModifier[562] = 0
