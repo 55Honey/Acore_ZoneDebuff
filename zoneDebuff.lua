@@ -77,6 +77,17 @@ ConfigMap_RageFromDamageModifier[409] = 0
 ConfigMap_AbsorbModifier[409] = -50
 ConfigMap_HealingDoneModifier[409] = -50
 
+-- Onyxia's Lair [249]
+ConfigMap_baseStatModifier[249] = 0
+ConfigMap_meleeAPModifier[249] = 0
+ConfigMap_rangedAPModifier[249] = 0
+ConfigMap_DamageTaken[249] = 50
+ConfigMap_DamageDoneModifier[249] = 0
+ConfigMap_hpModifier[249] = 0
+ConfigMap_RageFromDamageModifier[249] = 0
+ConfigMap_AbsorbModifier[249] = -50
+ConfigMap_HealingDoneModifier[249] = -50
+
 -- Alterac Valley [30]
 ConfigMap_baseStatModifier[30] = 0
 ConfigMap_meleeAPModifier[30] = 0
@@ -186,6 +197,7 @@ table.insert(Config_DungeonMaps, 329) -- Stratholme
 
 table.insert(Config_Maps, 229) -- Blackrock Spire
 table.insert(Config_Maps, 409) -- Molten Core
+table.insert(Config_Maps, 249) -- Onyxia's Lair
 --table.insert(Config_Maps, 469) -- Blackwing Lair
 --table.insert(Config_Maps, 509) -- Ruins of Ahn'Qiraj
 --table.insert(Config_Maps, 531) -- Temple of Ahn'Qiraj
@@ -201,6 +213,7 @@ table.insert(Config_Maps, 618) -- Ring of Valor
 
 table.insert(Config_NoWorldBuffMaps, 229) -- Blackrock Spire
 table.insert(Config_NoWorldBuffMaps, 409) -- Molten Core
+table.insert(Config_NoWorldBuffMaps, 249) -- Onyxia's Lair
 table.insert(Config_NoWorldBuffMaps, 469) -- Blackwing Lair
 table.insert(Config_NoWorldBuffMaps, 509) -- Ruins of Ahn'Qiraj
 table.insert(Config_NoWorldBuffMaps, 531) -- Temple of Ahn'Qiraj
