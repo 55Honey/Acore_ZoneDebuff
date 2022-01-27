@@ -19,32 +19,25 @@
 -- GM GUIDE:     -  nothing to do. Just watch them suffer.
 ------------------------------------------------------------------------------------------------
 local Config = {}
-local ConfigRaid_baseStatModifier = {}
-local ConfigRaid_meleeAPModifier = {}
-local ConfigRaid_rangedAPModifier = {}
-local ConfigRaid_DamageTaken = {}
-local ConfigRaid_DamageDoneModifier = {}
-local ConfigRaid_hpModifier = {}
-local ConfigRaid_RageFromDamageModifier = {}
-local ConfigRaid_AbsorbModifier = {}
-local ConfigRaid_HealingDoneModifier = {}
+local ConfigMap_baseStatModifier = {}
+local ConfigMap_meleeAPModifier = {}
+local ConfigMap_rangedAPModifier = {}
+local ConfigMap_DamageTaken = {}
+local ConfigMap_DamageDoneModifier = {}
+local ConfigMap_hpModifier = {}
+local ConfigMap_RageFromDamageModifier = {}
+local ConfigMap_AbsorbModifier = {}
+local ConfigMap_HealingDoneModifier = {}
 local ConfigDungeon = {}
-local ConfigPvP = {}
-local Config_RaidMaps = {}         -- maps where to debuff players always for PvE
+local Config_Maps = {}         -- maps where to debuff players always for PvE
 local Config_DungeonMaps = {}      -- maps where to debuff players when no rdf
-local Config_PvPMaps = {}          -- maps where to debuff players always for PvP
 local Config_NoWorldBuffMaps = {}  -- maps where to remove world buffs
 local Config_WorldBuff = {}        -- spell IDs of world buffs to be removed
 
 -- on/off switch (0/1)
-Config.RaidActive = 1
+Config.MapsActive = 1
 Config.DungeonActive = 0
-Config.PvPActive = 1
 Config.NoWorldBuffMaps = 1
-
-Config.debuffedMessageRaid = ''
-Config.debuffedMessageDungeon = ''
-Config.debuffedMessagePvP = ''
 
 Config.HpAuraSpell = 89501
 Config.DamageDoneTakenSpell = 89502
@@ -60,29 +53,121 @@ Config.VisualSpellDungeon = nil
 Config.DebuffMessageRaid = 'Chromies time-travelling spell impacts your powers. You feel weakened.'
 Config.DebuffMessageDungeon = 'Chromies time-travelling spell impacts your powers. You feel weakened.'
 
+-- Modifiers per map:
 -- all modifiers are in %
 -- UBRS [229]
-ConfigRaid_baseStatModifier[229] = 0
-ConfigRaid_meleeAPModifier[229] = 0
-ConfigRaid_rangedAPModifier[229] = 0
-ConfigRaid_DamageTaken[229] = 100
-ConfigRaid_DamageDoneModifier[229] = 0
-ConfigRaid_hpModifier[229] = 0
-ConfigRaid_RageFromDamageModifier[229] = 0
-ConfigRaid_AbsorbModifier[229] = 0
-ConfigRaid_HealingDoneModifier[229] = 0
+ConfigMap_baseStatModifier[229] = 0
+ConfigMap_meleeAPModifier[229] = 0
+ConfigMap_rangedAPModifier[229] = 0
+ConfigMap_DamageTaken[229] = 100
+ConfigMap_DamageDoneModifier[229] = 0
+ConfigMap_hpModifier[229] = 0
+ConfigMap_RageFromDamageModifier[229] = 0
+ConfigMap_AbsorbModifier[229] = 0
+ConfigMap_HealingDoneModifier[229] = 0
 
 -- MC [409]
-ConfigRaid_baseStatModifier[409] = 0
-ConfigRaid_meleeAPModifier[409] = 0
-ConfigRaid_rangedAPModifier[409] = 0
-ConfigRaid_DamageTaken[409] = 50
-ConfigRaid_DamageDoneModifier[409] = 0
-ConfigRaid_hpModifier[409] = 0
-ConfigRaid_RageFromDamageModifier[409] = 0
-ConfigRaid_AbsorbModifier[409] = -50
-ConfigRaid_HealingDoneModifier[409] = -50
+ConfigMap_baseStatModifier[409] = 0
+ConfigMap_meleeAPModifier[409] = 0
+ConfigMap_rangedAPModifier[409] = 0
+ConfigMap_DamageTaken[409] = 50
+ConfigMap_DamageDoneModifier[409] = 0
+ConfigMap_hpModifier[409] = 0
+ConfigMap_RageFromDamageModifier[409] = 0
+ConfigMap_AbsorbModifier[409] = -50
+ConfigMap_HealingDoneModifier[409] = -50
 
+-- Alterac Valley [30]
+ConfigMap_baseStatModifier[30] = 0
+ConfigMap_meleeAPModifier[30] = 0
+ConfigMap_rangedAPModifier[30] = 0
+ConfigMap_DamageTaken[30] = -20
+ConfigMap_DamageDoneModifier[30] = 0
+ConfigMap_hpModifier[30] = 0
+ConfigMap_RageFromDamageModifier[30] = 0
+ConfigMap_AbsorbModifier[30] = 0
+ConfigMap_HealingDoneModifier[30] = 0
+
+-- Warsong Gulch [489]
+ConfigMap_baseStatModifier[489] = 0
+ConfigMap_meleeAPModifier[489] = 0
+ConfigMap_rangedAPModifier[489] = 0
+ConfigMap_DamageTaken[489] = -20
+ConfigMap_DamageDoneModifier[489] = 0
+ConfigMap_hpModifier[489] = 0
+ConfigMap_RageFromDamageModifier[489] = 0
+ConfigMap_AbsorbModifier[489] = 0
+ConfigMap_HealingDoneModifier[489] = 0
+
+-- Arathi Basin [529]
+ConfigMap_baseStatModifier[529] = 0
+ConfigMap_meleeAPModifier[529] = 0
+ConfigMap_rangedAPModifier[529] = 0
+ConfigMap_DamageTaken[529] = -20
+ConfigMap_DamageDoneModifier[529] = 0
+ConfigMap_hpModifier[529] = 0
+ConfigMap_RageFromDamageModifier[529] = 0
+ConfigMap_AbsorbModifier[529] = 0
+ConfigMap_HealingDoneModifier[529] = 0
+
+-- Ring of Trials [559]
+ConfigMap_baseStatModifier[559] = 0
+ConfigMap_meleeAPModifier[559] = 0
+ConfigMap_rangedAPModifier[559] = 0
+ConfigMap_DamageTaken[559] = -20
+ConfigMap_DamageDoneModifier[559] = 0
+ConfigMap_hpModifier[559] = 0
+ConfigMap_RageFromDamageModifier[559] = 0
+ConfigMap_AbsorbModifier[559] = 0
+ConfigMap_HealingDoneModifier[559] = 0
+
+-- Blade's Edge Arena [562]
+ConfigMap_baseStatModifier[562] = 0
+ConfigMap_meleeAPModifier[562] = 0
+ConfigMap_rangedAPModifier[562] = 0
+ConfigMap_DamageTaken[562] = -20
+ConfigMap_DamageDoneModifier[562] = 0
+ConfigMap_hpModifier[562] = 0
+ConfigMap_RageFromDamageModifier[562] = 0
+ConfigMap_AbsorbModifier[562] = 0
+ConfigMap_HealingDoneModifier[562] = 0
+
+-- Ruins of Lordaeron [572]
+ConfigMap_baseStatModifier[572] = 0
+ConfigMap_meleeAPModifier[572] = 0
+ConfigMap_rangedAPModifier[572] = 0
+ConfigMap_DamageTaken[572] = -20
+ConfigMap_DamageDoneModifier[572] = 0
+ConfigMap_hpModifier[572] = 0
+ConfigMap_RageFromDamageModifier[572] = 0
+ConfigMap_AbsorbModifier[572] = 0
+ConfigMap_HealingDoneModifier[572] = 0
+
+-- Dalaran Arena [617]
+ConfigMap_baseStatModifier[617] = 0
+ConfigMap_meleeAPModifier[617] = 0
+ConfigMap_rangedAPModifier[617] = 0
+ConfigMap_DamageTaken[617] = -20
+ConfigMap_DamageDoneModifier[617] = 0
+ConfigMap_hpModifier[617] = 0
+ConfigMap_RageFromDamageModifier[617] = 0
+ConfigMap_AbsorbModifier[617] = 0
+ConfigMap_HealingDoneModifier[617] = 0
+
+-- Ring of Valor [618]
+ConfigMap_baseStatModifier[618] = 0
+ConfigMap_meleeAPModifier[618] = 0
+ConfigMap_rangedAPModifier[618] = 0
+ConfigMap_DamageTaken[618] = -20
+ConfigMap_DamageDoneModifier[618] = 0
+ConfigMap_hpModifier[618] = 0
+ConfigMap_RageFromDamageModifier[618] = 0
+ConfigMap_AbsorbModifier[618] = 0
+ConfigMap_HealingDoneModifier[618] = 0
+
+
+-- These values apply to all maps in Config_DungeonMaps
+-- all modifiers are in %
 ConfigDungeon.baseStatModifier = 0
 ConfigDungeon.meleeAPModifier = -10
 ConfigDungeon.rangedAPModifier = -20
@@ -93,29 +178,26 @@ ConfigDungeon.RageFromDamage = 10
 ConfigDungeon.Absorb = 0
 ConfigDungeon.HealingDone = 0
 
-ConfigPvP.DamageTaken = -20
-ConfigPvP.DamageDone = 0
 
 -- all players in these maps will become debuffed on login, when entering and resurrecting
 table.insert(Config_DungeonMaps, 429) -- Dire Maul
 table.insert(Config_DungeonMaps, 289) -- Scholomance
 table.insert(Config_DungeonMaps, 329) -- Stratholme
 
-table.insert(Config_RaidMaps, 229) -- Blackrock Spire
-table.insert(Config_RaidMaps, 409) -- Molten Core
---table.insert(Config_RaidMaps, 469) -- Blackwing Lair
---table.insert(Config_RaidMaps, 509) -- Ruins of Ahn'Qiraj
---table.insert(Config_RaidMaps, 531) -- Temple of Ahn'Qiraj
---table.insert(Config_RaidMaps, 309) -- Zul Gurub
-
-table.insert(Config_PvPMaps, 529) -- Arathi Basin
-table.insert(Config_PvPMaps, 30) -- Alterac Valley
-table.insert(Config_PvPMaps, 489) -- Warsong Gulch
-table.insert(Config_PvPMaps, 618) -- Ring of Valor
-table.insert(Config_PvPMaps, 572) -- Ruins of Lordaeron
-table.insert(Config_PvPMaps, 559) -- Ring of Trials
-table.insert(Config_PvPMaps, 562) -- Blade's Edge Arena
-table.insert(Config_PvPMaps, 617) -- Dalaran Arena
+table.insert(Config_Maps, 229) -- Blackrock Spire
+table.insert(Config_Maps, 409) -- Molten Core
+--table.insert(Config_Maps, 469) -- Blackwing Lair
+--table.insert(Config_Maps, 509) -- Ruins of Ahn'Qiraj
+--table.insert(Config_Maps, 531) -- Temple of Ahn'Qiraj
+--table.insert(Config_Maps, 309) -- Zul Gurub
+table.insert(Config_Maps, 30) -- Alterac Valley
+table.insert(Config_Maps, 489) -- Warsong Gulch
+table.insert(Config_Maps, 529) -- Arathi Basin
+table.insert(Config_Maps, 559) -- Ring of Trials
+table.insert(Config_Maps, 562) -- Blade's Edge Arena
+table.insert(Config_Maps, 572) -- Ruins of Lordaeron
+table.insert(Config_Maps, 617) -- Dalaran Arena
+table.insert(Config_Maps, 618) -- Ring of Valor
 
 table.insert(Config_NoWorldBuffMaps, 229) -- Blackrock Spire
 table.insert(Config_NoWorldBuffMaps, 409) -- Molten Core
@@ -161,7 +243,7 @@ local function zd_shouldRemoveWorldBuff(unit)
 end
 
 local function zd_shouldDebuffRaid(player)
-    if Config.RaidActive ~= 1 then
+    if Config.MapsActive ~= 1 then
         return false
     else
         local mapId = player:GetMap():GetMapId()
@@ -171,12 +253,12 @@ local function zd_shouldDebuffRaid(player)
                 return false
             end
         end
-        return has_value(Config_RaidMaps, mapId)
+        return has_value(Config_Maps, mapId)
     end
 end
 
 local function zd_shouldDebuffRaidPet(pet)
-    if Config.RaidActive ~= 1 then
+    if Config.MapsActive ~= 1 then
         return false
     else
         local mapId = pet:GetMap():GetMapId()
@@ -186,7 +268,7 @@ local function zd_shouldDebuffRaidPet(pet)
                 return false
             end
         end
-        return has_value(Config_RaidMaps, mapId)
+        return has_value(Config_Maps, mapId)
     end
 end
 
@@ -216,34 +298,25 @@ local function zd_shouldDebuffDungeonPet(pet)
     end
 end
 
-local function zd_shouldDebuffPvP(unit)
-    if Config.PvPActive ~= 1 then
-        return false
-    else
-        local mapId = unit:GetMap():GetMapId()
-        return has_value(Config_PvPMaps, mapId)
-    end
-end
-
-local function zd_debuffRaid(player)
+local function zd_debuffByMap(player)
     local mapId = player:GetMap():GetMapId()
     if not player:HasAura(Config.BaseStatAPSpell) then
-        player:CastCustomSpell(player, Config.BaseStatAPSpell, false, ConfigRaid_baseStatModifier[mapId],ConfigRaid_meleeAPModifier[mapId],ConfigRaid_rangedAPModifier[mapId])
+        player:CastCustomSpell(player, Config.BaseStatAPSpell, false, ConfigMap_baseStatModifier[mapId],ConfigMap_meleeAPModifier[mapId],ConfigMap_rangedAPModifier[mapId])
     end
     if not player:HasAura(Config.DamageDoneTakenSpell) then
-        player:CastCustomSpell(player, Config.DamageDoneTakenSpell, false, ConfigRaid_DamageTaken[mapId],ConfigRaid_DamageDoneModifier[mapId])
+        player:CastCustomSpell(player, Config.DamageDoneTakenSpell, false, ConfigMap_DamageTaken[mapId],ConfigMap_DamageDoneModifier[mapId])
     end
     if not player:HasAura(Config.HpAuraSpell) then
-        player:CastCustomSpell(player, Config.HpAuraSpell, false, ConfigRaid_hpModifier[mapId])
+        player:CastCustomSpell(player, Config.HpAuraSpell, false, ConfigMap_hpModifier[mapId])
     end
     if not player:HasAura(Config.RageFromDamageSpell) then
-        player:CastCustomSpell(player, Config.RageFromDamageSpell, false, ConfigRaid_RageFromDamageModifier[mapId])
+        player:CastCustomSpell(player, Config.RageFromDamageSpell, false, ConfigMap_RageFromDamageModifier[mapId])
     end
     if not player:HasAura(Config.AbsorbSpell) then
-        player:CastCustomSpell(player, Config.AbsorbSpell, false, ConfigRaid_AbsorbModifier[mapId])
+        player:CastCustomSpell(player, Config.AbsorbSpell, false, ConfigMap_AbsorbModifier[mapId])
     end
     if not player:HasAura(Config.HealingDoneSpell) then
-        player:CastCustomSpell(player, Config.HealingDoneSpell, false, ConfigRaid_HealingDoneModifier[mapId])
+        player:CastCustomSpell(player, Config.HealingDoneSpell, false, ConfigMap_HealingDoneModifier[mapId])
     end
     if Config.VisualSpellRaid ~= nil then
         if not player:HasAura(Config.VisualSpellRaid) then
@@ -280,23 +353,13 @@ local function zd_debuffDungeon(player)
     player:SendBroadcastMessage(Config.DebuffMessageDungeon)
 end
 
-local function zd_debuffPvP(player)
-    if not player:HasAura(Config.DamageDoneTakenSpell) then
-        player:CastCustomSpell(player, Config.DamageDoneTakenSpell, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
-    end
-end
-
-local function zd_debuffRaidPet(pet)
+local function zd_debuffByMapPet(pet)
     local mapId = pet:GetMap():GetMapId()
-    pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigRaid_DamageTaken[mapId],ConfigRaid_DamageDoneModifier[mapId])
+    pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigMap_DamageTaken[mapId],ConfigMap_DamageDoneModifier[mapId])
 end
 
 local function zd_debuffPetDungeon(pet)
     pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigDungeon.DamageTaken,ConfigDungeon.DamageDone)
-end
-
-local function zd_debuffPetPvP(pet)
-    pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigPvP.DamageTaken,ConfigPvP.DamageDone)
 end
 
 local function zd_removeWorldbuffs(player)
@@ -336,13 +399,10 @@ local function zd_checkPlayerMap(player)
     end
     if zd_shouldDebuffRaid(player) then
         zd_removeDebuff(player)
-        zd_debuffRaid(player)
+        zd_debuffByMap(player)
     elseif zd_shouldDebuffDungeon(player) then
         zd_removeDebuff(player)
         zd_debuffDungeon(player)
-    elseif zd_shouldDebuffPvP(player) then
-        zd_removeDebuff(player)
-        zd_debuffPvP(player)
     else
         zd_removeDebuff(player)
     end
@@ -354,13 +414,10 @@ local function zd_checkPetMap(pet)
     end
     if zd_shouldDebuffRaidPet(pet) then
         zd_removeDebuffPet(pet)
-        zd_debuffRaidPet(pet)
+        zd_debuffByMapPet(pet)
     elseif zd_shouldDebuffDungeonPet(pet) then
         zd_removeDebuffPet(pet)
         zd_debuffPetDungeon(pet)
-    elseif zd_shouldDebuffPvP(pet) then
-        zd_removeDebuffPet(pet)
-        zd_debuffPetPvP(pet)
     else
         zd_removeDebuffPet(pet)
     end
@@ -382,7 +439,7 @@ local function zd_checkMapResurrect(event, player)
     zd_checkPlayerMap(player)
 end
 
-if Config.RaidActive == 1 or Config.DungeonActive == 1 or Config.PvPActive == 1 or Config.NoWorldBuffMaps == 1 then
+if Config.MapsActive == 1 or Config.DungeonActive == 1 or Config.NoWorldBuffMaps == 1 then
     RegisterPlayerEvent(PLAYER_EVENT_ON_LOGIN, zd_checkMapLogin)
     RegisterPlayerEvent(PLAYER_EVENT_ON_MAP_CHANGE, zd_checkMapUpdate)
     RegisterPlayerEvent(PLAYER_EVENT_ON_PET_SPAWNED, zd_checkMapPetSpawned)
