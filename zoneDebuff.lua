@@ -35,7 +35,7 @@ local Config_NoWorldBuffMaps = {}  -- maps where to remove world buffs
 local Config_WorldBuff = {}        -- spell IDs of world buffs to be removed
 
 -- on/off switch (0/1)
-Config.RaidActive = 1
+Config.MapsActive = 1
 Config.DungeonActive = 0
 Config.NoWorldBuffMaps = 1
 
@@ -81,89 +81,89 @@ ConfigMap_HealingDoneModifier[409] = -50
 ConfigMap_baseStatModifier[30] = 0
 ConfigMap_meleeAPModifier[30] = 0
 ConfigMap_rangedAPModifier[30] = 0
-ConfigMap_DamageTaken[30] = -30
+ConfigMap_DamageTaken[30] = -20
 ConfigMap_DamageDoneModifier[30] = 0
 ConfigMap_hpModifier[30] = 0
-ConfigMap_RageFromDamageModifier[30] = 10
-ConfigMap_AbsorbModifier[30] = -20
-ConfigMap_HealingDoneModifier[30] = -20
+ConfigMap_RageFromDamageModifier[30] = 0
+ConfigMap_AbsorbModifier[30] = 0
+ConfigMap_HealingDoneModifier[30] = 0
 
 -- Warsong Gulch [489]
 ConfigMap_baseStatModifier[489] = 0
 ConfigMap_meleeAPModifier[489] = 0
 ConfigMap_rangedAPModifier[489] = 0
-ConfigMap_DamageTaken[489] = -30
+ConfigMap_DamageTaken[489] = -20
 ConfigMap_DamageDoneModifier[489] = 0
 ConfigMap_hpModifier[489] = 0
-ConfigMap_RageFromDamageModifier[489] = 10
-ConfigMap_AbsorbModifier[489] = -20
-ConfigMap_HealingDoneModifier[489] = -20
+ConfigMap_RageFromDamageModifier[489] = 0
+ConfigMap_AbsorbModifier[489] = 0
+ConfigMap_HealingDoneModifier[489] = 0
 
 -- Arathi Basin [529]
 ConfigMap_baseStatModifier[529] = 0
 ConfigMap_meleeAPModifier[529] = 0
 ConfigMap_rangedAPModifier[529] = 0
-ConfigMap_DamageTaken[529] = -30
+ConfigMap_DamageTaken[529] = -20
 ConfigMap_DamageDoneModifier[529] = 0
 ConfigMap_hpModifier[529] = 0
-ConfigMap_RageFromDamageModifier[529] = 10
-ConfigMap_AbsorbModifier[529] = -20
-ConfigMap_HealingDoneModifier[529] = -20
+ConfigMap_RageFromDamageModifier[529] = 0
+ConfigMap_AbsorbModifier[529] = 0
+ConfigMap_HealingDoneModifier[529] = 0
 
 -- Ring of Trials [559]
 ConfigMap_baseStatModifier[559] = 0
 ConfigMap_meleeAPModifier[559] = 0
 ConfigMap_rangedAPModifier[559] = 0
-ConfigMap_DamageTaken[559] = -30
+ConfigMap_DamageTaken[559] = -20
 ConfigMap_DamageDoneModifier[559] = 0
 ConfigMap_hpModifier[559] = 0
-ConfigMap_RageFromDamageModifier[559] = 10
-ConfigMap_AbsorbModifier[559] = -20
-ConfigMap_HealingDoneModifier[559] = -20
+ConfigMap_RageFromDamageModifier[559] = 0
+ConfigMap_AbsorbModifier[559] = 0
+ConfigMap_HealingDoneModifier[559] = 0
 
 -- Blade's Edge Arena [562]
 ConfigMap_baseStatModifier[562] = 0
 ConfigMap_meleeAPModifier[562] = 0
 ConfigMap_rangedAPModifier[562] = 0
-ConfigMap_DamageTaken[562] = -30
+ConfigMap_DamageTaken[562] = -20
 ConfigMap_DamageDoneModifier[562] = 0
 ConfigMap_hpModifier[562] = 0
-ConfigMap_RageFromDamageModifier[562] = 10
-ConfigMap_AbsorbModifier[562] = -20
-ConfigMap_HealingDoneModifier[562] = -20
+ConfigMap_RageFromDamageModifier[562] = 0
+ConfigMap_AbsorbModifier[562] = 0
+ConfigMap_HealingDoneModifier[562] = 0
 
 -- Ruins of Lordaeron [572]
 ConfigMap_baseStatModifier[572] = 0
 ConfigMap_meleeAPModifier[572] = 0
 ConfigMap_rangedAPModifier[572] = 0
-ConfigMap_DamageTaken[572] = -30
+ConfigMap_DamageTaken[572] = -20
 ConfigMap_DamageDoneModifier[572] = 0
 ConfigMap_hpModifier[572] = 0
-ConfigMap_RageFromDamageModifier[572] = 10
-ConfigMap_AbsorbModifier[572] = -20
-ConfigMap_HealingDoneModifier[572] = -20
+ConfigMap_RageFromDamageModifier[572] = 0
+ConfigMap_AbsorbModifier[572] = 0
+ConfigMap_HealingDoneModifier[572] = 0
 
 -- Dalaran Arena [617]
 ConfigMap_baseStatModifier[617] = 0
 ConfigMap_meleeAPModifier[617] = 0
 ConfigMap_rangedAPModifier[617] = 0
-ConfigMap_DamageTaken[617] = -30
+ConfigMap_DamageTaken[617] = -20
 ConfigMap_DamageDoneModifier[617] = 0
 ConfigMap_hpModifier[617] = 0
-ConfigMap_RageFromDamageModifier[617] = 10
-ConfigMap_AbsorbModifier[617] = -20
-ConfigMap_HealingDoneModifier[617] = -20
+ConfigMap_RageFromDamageModifier[617] = 0
+ConfigMap_AbsorbModifier[617] = 0
+ConfigMap_HealingDoneModifier[617] = 0
 
 -- Ring of Valor [618]
 ConfigMap_baseStatModifier[618] = 0
 ConfigMap_meleeAPModifier[618] = 0
 ConfigMap_rangedAPModifier[618] = 0
-ConfigMap_DamageTaken[618] = -30
+ConfigMap_DamageTaken[618] = -20
 ConfigMap_DamageDoneModifier[618] = 0
 ConfigMap_hpModifier[618] = 0
-ConfigMap_RageFromDamageModifier[618] = 10
-ConfigMap_AbsorbModifier[618] = -20
-ConfigMap_HealingDoneModifier[618] = -20
+ConfigMap_RageFromDamageModifier[618] = 0
+ConfigMap_AbsorbModifier[618] = 0
+ConfigMap_HealingDoneModifier[618] = 0
 
 
 -- These values apply to all maps in Config_DungeonMaps
@@ -243,7 +243,7 @@ local function zd_shouldRemoveWorldBuff(unit)
 end
 
 local function zd_shouldDebuffRaid(player)
-    if Config.RaidActive ~= 1 then
+    if Config.MapsActive ~= 1 then
         return false
     else
         local mapId = player:GetMap():GetMapId()
@@ -258,7 +258,7 @@ local function zd_shouldDebuffRaid(player)
 end
 
 local function zd_shouldDebuffRaidPet(pet)
-    if Config.RaidActive ~= 1 then
+    if Config.MapsActive ~= 1 then
         return false
     else
         local mapId = pet:GetMap():GetMapId()
@@ -439,7 +439,7 @@ local function zd_checkMapResurrect(event, player)
     zd_checkPlayerMap(player)
 end
 
-if Config.RaidActive == 1 or Config.DungeonActive == 1 or Config.NoWorldBuffMaps == 1 then
+if Config.MapsActive == 1 or Config.DungeonActive == 1 or Config.NoWorldBuffMaps == 1 then
     RegisterPlayerEvent(PLAYER_EVENT_ON_LOGIN, zd_checkMapLogin)
     RegisterPlayerEvent(PLAYER_EVENT_ON_MAP_CHANGE, zd_checkMapUpdate)
     RegisterPlayerEvent(PLAYER_EVENT_ON_PET_SPAWNED, zd_checkMapPetSpawned)
