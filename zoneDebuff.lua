@@ -88,6 +88,18 @@ ConfigMap_RageFromDamageModifier[249] = 0
 ConfigMap_AbsorbModifier[249] = -50
 ConfigMap_HealingDoneModifier[249] = -50
 
+-- Blackwing Lair [469]
+
+ConfigMap_baseStatModifier[469] = 0
+ConfigMap_meleeAPModifier[469] = 0
+ConfigMap_rangedAPModifier[469] = 0
+ConfigMap_DamageTaken[469] = 30
+ConfigMap_DamageDoneModifier[469] = 0
+ConfigMap_hpModifier[469] = 0
+ConfigMap_RageFromDamageModifier[469] = 0
+ConfigMap_AbsorbModifier[469] = -50
+ConfigMap_HealingDoneModifier[469] = -50
+
 -- Alterac Valley [30]
 ConfigMap_baseStatModifier[30] = 0
 ConfigMap_meleeAPModifier[30] = 0
@@ -198,7 +210,7 @@ table.insert(Config_DungeonMaps, 329) -- Stratholme
 table.insert(Config_Maps, 229) -- Blackrock Spire
 table.insert(Config_Maps, 409) -- Molten Core
 table.insert(Config_Maps, 249) -- Onyxia's Lair
---table.insert(Config_Maps, 469) -- Blackwing Lair
+table.insert(Config_Maps, 469) -- Blackwing Lair
 --table.insert(Config_Maps, 509) -- Ruins of Ahn'Qiraj
 --table.insert(Config_Maps, 531) -- Temple of Ahn'Qiraj
 --table.insert(Config_Maps, 309) -- Zul Gurub
