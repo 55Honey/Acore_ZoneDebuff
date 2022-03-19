@@ -28,6 +28,11 @@ local ConfigMap_hpModifier = {}
 local ConfigMap_RageFromDamageModifier = {}
 local ConfigMap_AbsorbModifier = {}
 local ConfigMap_HealingDoneModifier = {}
+local ConfigMap_HunterPetOverrideDamageDoneModifier = {}
+local ConfigMap_WarlockPetOverrideDamageDoneModifier = {}
+local ConfigMap_ShamanPetOverrideDamageDoneModifier = {}
+local ConfigMap_MagePetOverrideDamageDoneModifier = {}
+local ConfigMap_DeathknightPetOverrideDamageDoneModifier = {}
 local ConfigDungeon = {}
 local Config_Maps = {}         -- maps where to debuff players always for PvE
 local Config_DungeonMaps = {}      -- maps where to debuff players when no rdf
@@ -65,6 +70,11 @@ ConfigMap_hpModifier[229] = 0
 ConfigMap_RageFromDamageModifier[229] = 0
 ConfigMap_AbsorbModifier[229] = 0
 ConfigMap_HealingDoneModifier[229] = 0
+ConfigMap_HunterPetOverrideDamageDoneModifier[229] = nil        -- Will override ConfigMap_DamageDoneModifier
+ConfigMap_WarlockPetOverrideDamageDoneModifier[229] = nil       -- ONLY for pets and summoned creatures, if the
+ConfigMap_ShamanPetOverrideDamageDoneModifier[229] = nil        -- variable has any value other than nil for the
+ConfigMap_MagePetOverrideDamageDoneModifier[229] = nil          -- specific map.
+ConfigMap_DeathknightPetOverrideDamageDoneModifier[229] = nil
 
 -- MC [409]
 ConfigMap_baseStatModifier[409] = 0
@@ -98,6 +108,7 @@ ConfigMap_hpModifier[30] = 0
 ConfigMap_RageFromDamageModifier[30] = 0
 ConfigMap_AbsorbModifier[30] = 0
 ConfigMap_HealingDoneModifier[30] = 0
+ConfigMap_HunterPetOverrideDamageDoneModifier[30] = -20
 
 -- Warsong Gulch [489]
 ConfigMap_baseStatModifier[489] = 0
@@ -109,6 +120,7 @@ ConfigMap_hpModifier[489] = 0
 ConfigMap_RageFromDamageModifier[489] = 0
 ConfigMap_AbsorbModifier[489] = 0
 ConfigMap_HealingDoneModifier[489] = 0
+ConfigMap_HunterPetOverrideDamageDoneModifier[489] = -20
 
 -- Arathi Basin [529]
 ConfigMap_baseStatModifier[529] = 0
@@ -120,6 +132,7 @@ ConfigMap_hpModifier[529] = 0
 ConfigMap_RageFromDamageModifier[529] = 0
 ConfigMap_AbsorbModifier[529] = 0
 ConfigMap_HealingDoneModifier[529] = 0
+ConfigMap_HunterPetOverrideDamageDoneModifier[529] = -20
 
 -- Ring of Trials [559]
 ConfigMap_baseStatModifier[559] = 0
@@ -131,6 +144,7 @@ ConfigMap_hpModifier[559] = 0
 ConfigMap_RageFromDamageModifier[559] = 0
 ConfigMap_AbsorbModifier[559] = 0
 ConfigMap_HealingDoneModifier[559] = 0
+ConfigMap_HunterPetOverrideDamageDoneModifier[559] = -20
 
 -- Blade's Edge Arena [562]
 ConfigMap_baseStatModifier[562] = 0
@@ -142,6 +156,7 @@ ConfigMap_hpModifier[562] = 0
 ConfigMap_RageFromDamageModifier[562] = 0
 ConfigMap_AbsorbModifier[562] = 0
 ConfigMap_HealingDoneModifier[562] = 0
+ConfigMap_HunterPetOverrideDamageDoneModifier[562] = -20
 
 -- Ruins of Lordaeron [572]
 ConfigMap_baseStatModifier[572] = 0
@@ -153,6 +168,7 @@ ConfigMap_hpModifier[572] = 0
 ConfigMap_RageFromDamageModifier[572] = 0
 ConfigMap_AbsorbModifier[572] = 0
 ConfigMap_HealingDoneModifier[572] = 0
+ConfigMap_HunterPetOverrideDamageDoneModifier[572] = -20
 
 -- Dalaran Arena [617]
 ConfigMap_baseStatModifier[617] = 0
@@ -164,6 +180,7 @@ ConfigMap_hpModifier[617] = 0
 ConfigMap_RageFromDamageModifier[617] = 0
 ConfigMap_AbsorbModifier[617] = 0
 ConfigMap_HealingDoneModifier[617] = 0
+ConfigMap_HunterPetOverrideDamageDoneModifier[617] = -20
 
 -- Ring of Valor [618]
 ConfigMap_baseStatModifier[618] = 0
@@ -175,6 +192,7 @@ ConfigMap_hpModifier[618] = 0
 ConfigMap_RageFromDamageModifier[618] = 0
 ConfigMap_AbsorbModifier[618] = 0
 ConfigMap_HealingDoneModifier[618] = 0
+ConfigMap_HunterPetOverrideDamageDoneModifier[618] = -20
 
 
 -- These values apply to all maps in Config_DungeonMaps
@@ -231,6 +249,13 @@ table.insert(Config_WorldBuff, 15123) -- Resist Fire from Scarshield Spellbinder
 ------------------------------------------
 -- NO ADJUSTMENTS REQUIRED BELOW THIS LINE
 ------------------------------------------
+
+local CLASS_HUNTER = 3
+local CLASS_DEATHKNIGHT = 6
+local CLASS_SHAMAN = 7
+local CLASS_MAGE = 8
+local CLASS_WARLOCK = 9
+
 
 local PLAYER_EVENT_ON_LOGIN = 3               -- (event, player)
 local PLAYER_EVENT_ON_MAP_CHANGE = 28         -- (event, player)
@@ -368,7 +393,34 @@ end
 
 local function zd_debuffByMapPet(pet)
     local mapId = pet:GetMap():GetMapId()
-    pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigMap_DamageTaken[mapId],ConfigMap_DamageDoneModifier[mapId])
+    local DamageDoneModifier
+
+    -- Check for existiong
+    if ConfigMap_HunterPetOverrideDamageDoneModifier[mapId] ~= nil or
+        ConfigMap_ShamanPetOverrideDamageDoneModifier[mapId] ~= nil or
+        ConfigMap_MagePetOverrideDamageDoneModifier[mapId] ~= nil or
+        ConfigMap_DeathknightPetOverrideDamageDoneModifier[mapId] ~= nil or
+        ConfigMap_WarlockPetOverrideDamageDoneModifier[mapId] ~= nil then
+        if pet:GetOwner():GetClass() == CLASS_DEATHKNIGHT then
+            DamageDoneModifier = ConfigMap_DeathknightPetOverrideDamageDoneModifier[mapId]
+        elseif
+        pet:GetOwner():GetClass() == CLASS_HUNTER then
+            DamageDoneModifier = ConfigMap_HunterPetOverrideDamageDoneModifier[mapId]
+        elseif
+        pet:GetOwner():GetClass() == CLASS_SHAMAN then
+            DamageDoneModifier = ConfigMap_ShamanPetOverrideDamageDoneModifier[mapId]
+        elseif
+        pet:GetOwner():GetClass() == CLASS_DEATHKNIGHT then
+            DamageDoneModifier = ConfigMap_MagePetOverrideDamageDoneModifier[mapId]
+        elseif
+        pet:GetOwner():GetClass() == CLASS_WARLOCK then
+            DamageDoneModifier = ConfigMap_WarlockPetOverrideDamageDoneModifier[mapId]
+        end
+    else
+        DamageDoneModifier = ConfigMap_DamageDoneModifier[mapId]
+    end
+
+    pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigMap_DamageTaken[mapId],DamageDoneModifier)
 end
 
 local function zd_debuffPetDungeon(pet)
