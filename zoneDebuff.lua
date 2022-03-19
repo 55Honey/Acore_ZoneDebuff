@@ -395,7 +395,7 @@ local function zd_debuffByMapPet(pet)
     local mapId = pet:GetMap():GetMapId()
     local DamageDoneModifier
 
-    -- Check for existiong
+    -- Check for existing pet override
     if ConfigMap_HunterPetOverrideDamageDoneModifier[mapId] ~= nil or
         ConfigMap_ShamanPetOverrideDamageDoneModifier[mapId] ~= nil or
         ConfigMap_MagePetOverrideDamageDoneModifier[mapId] ~= nil or
