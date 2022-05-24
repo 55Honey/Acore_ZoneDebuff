@@ -56,15 +56,15 @@ Config.DebuffMessageDungeon = 'Chromies time-travelling spell impacts your power
 -- Modifiers per map:
 -- all modifiers are in %
 -- UBRS [229]
-ConfigMap_baseStatModifier[229] = 0
-ConfigMap_meleeAPModifier[229] = 0
-ConfigMap_rangedAPModifier[229] = 0
-ConfigMap_DamageTaken[229] = 100
-ConfigMap_DamageDoneModifier[229] = 0
-ConfigMap_hpModifier[229] = 0
-ConfigMap_RageFromDamageModifier[229] = 0
-ConfigMap_AbsorbModifier[229] = 0
-ConfigMap_HealingDoneModifier[229] = 0
+-- ConfigMap_baseStatModifier[229] = 0
+-- ConfigMap_meleeAPModifier[229] = 0
+-- ConfigMap_rangedAPModifier[229] = 0
+-- ConfigMap_DamageTaken[229] = 100
+-- ConfigMap_DamageDoneModifier[229] = 0
+-- ConfigMap_hpModifier[229] = 0
+-- ConfigMap_RageFromDamageModifier[229] = 0
+-- ConfigMap_AbsorbModifier[229] = 0
+-- ConfigMap_HealingDoneModifier[229] = 0
 
 -- MC [409]
 ConfigMap_baseStatModifier[409] = 0
@@ -207,7 +207,7 @@ table.insert(Config_DungeonMaps, 429) -- Dire Maul
 table.insert(Config_DungeonMaps, 289) -- Scholomance
 table.insert(Config_DungeonMaps, 329) -- Stratholme
 
-table.insert(Config_Maps, 229) -- Blackrock Spire
+-- table.insert(Config_Maps, 229) -- Blackrock Spire
 table.insert(Config_Maps, 409) -- Molten Core
 table.insert(Config_Maps, 249) -- Onyxia's Lair
 table.insert(Config_Maps, 469) -- Blackwing Lair
@@ -223,7 +223,7 @@ table.insert(Config_Maps, 572) -- Ruins of Lordaeron
 table.insert(Config_Maps, 617) -- Dalaran Arena
 table.insert(Config_Maps, 618) -- Ring of Valor
 
-table.insert(Config_NoWorldBuffMaps, 229) -- Blackrock Spire
+--table.insert(Config_NoWorldBuffMaps, 229) -- Blackrock Spire
 table.insert(Config_NoWorldBuffMaps, 409) -- Molten Core
 table.insert(Config_NoWorldBuffMaps, 249) -- Onyxia's Lair
 table.insert(Config_NoWorldBuffMaps, 469) -- Blackwing Lair
