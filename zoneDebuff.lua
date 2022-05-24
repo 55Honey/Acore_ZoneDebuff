@@ -223,7 +223,7 @@ table.insert(Config_Maps, 572) -- Ruins of Lordaeron
 table.insert(Config_Maps, 617) -- Dalaran Arena
 table.insert(Config_Maps, 618) -- Ring of Valor
 
-table.insert(Config_NoWorldBuffMaps, 229) -- Blackrock Spire
+--table.insert(Config_NoWorldBuffMaps, 229) -- Blackrock Spire
 table.insert(Config_NoWorldBuffMaps, 409) -- Molten Core
 table.insert(Config_NoWorldBuffMaps, 249) -- Onyxia's Lair
 table.insert(Config_NoWorldBuffMaps, 469) -- Blackwing Lair
