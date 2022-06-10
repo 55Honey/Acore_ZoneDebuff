@@ -28,6 +28,7 @@ local ConfigMap_hpModifier = {}
 local ConfigMap_RageFromDamageModifier = {}
 local ConfigMap_AbsorbModifier = {}
 local ConfigMap_HealingDoneModifier = {}
+local COnfigMap_PhysicalDamageTakenModifier= {}
 local ConfigDungeon = {}
 local Config_Maps = {}         -- maps where to debuff players always for PvE
 local Config_DungeonMaps = {}      -- maps where to debuff players when no rdf
@@ -45,6 +46,7 @@ Config.BaseStatAPSpell = 89503
 Config.RageFromDamageSpell = 89504
 Config.AbsorbSpell = 89505
 Config.HealingDoneSpell = 89506
+Config.PhysicalDamageTakenSpell = 89507
 
 --set to nil to prevent visual
 Config.VisualSpellRaid = nil -- 71367 = Fire Prison
@@ -65,6 +67,7 @@ Config.DebuffMessageDungeon = 'Chromies time-travelling spell impacts your power
 -- ConfigMap_RageFromDamageModifier[229] = 0
 -- ConfigMap_AbsorbModifier[229] = 0
 -- ConfigMap_HealingDoneModifier[229] = 0
+-- ConfigMap_PhysicalDamageTakenModifier[229] = 0
 
 -- MC [409]
 ConfigMap_baseStatModifier[409] = 0
@@ -76,7 +79,7 @@ ConfigMap_hpModifier[409] = 0
 ConfigMap_RageFromDamageModifier[409] = 0
 ConfigMap_AbsorbModifier[409] = -50
 ConfigMap_HealingDoneModifier[409] = -50
-
+ConfigMap_PhysicalDamageTakenModifier[409] = 0
 -- Onyxia's Lair [249]
 ConfigMap_baseStatModifier[249] = 0
 ConfigMap_meleeAPModifier[249] = 0
@@ -87,7 +90,7 @@ ConfigMap_hpModifier[249] = 0
 ConfigMap_RageFromDamageModifier[249] = 0
 ConfigMap_AbsorbModifier[249] = -50
 ConfigMap_HealingDoneModifier[249] = -50
-
+ConfigMap_PhysicalDamageTakenModifier[249] = 0
 -- Blackwing Lair [469]
 
 ConfigMap_baseStatModifier[469] = 0
@@ -99,7 +102,18 @@ ConfigMap_hpModifier[469] = 0
 ConfigMap_RageFromDamageModifier[469] = 0
 ConfigMap_AbsorbModifier[469] = -50
 ConfigMap_HealingDoneModifier[469] = -50
-
+ConfigMap_PhysicalDamageTakenModifier[469] = 0
+-- Zul Gurub [309]
+ConfigMap_baseStatModifier[309] = 0
+ConfigMap_meleeAPModifier[309] = 0
+ConfigMap_rangedAPModifier[309] = 0
+ConfigMap_DamageTaken[309] = 0
+ConfigMap_DamageDoneModifier[309] = 0
+ConfigMap_hpModifier[309] = 0
+ConfigMap_RageFromDamageModifier[309] = 0
+ConfigMap_AbsorbModifier[309] = -50
+ConfigMap_HealingDoneModifier[309] = -50
+ConfigMap_PhysicalDamageTakenModifier[309] = 50
 -- Alterac Valley [30]
 ConfigMap_baseStatModifier[30] = 0
 ConfigMap_meleeAPModifier[30] = 0
@@ -110,7 +124,7 @@ ConfigMap_hpModifier[30] = 0
 ConfigMap_RageFromDamageModifier[30] = 0
 ConfigMap_AbsorbModifier[30] = 0
 ConfigMap_HealingDoneModifier[30] = -20
-
+ConfigMap_PhysicalDamageTakenModifier[30] = 0
 -- Warsong Gulch [489]
 ConfigMap_baseStatModifier[489] = 0
 ConfigMap_meleeAPModifier[489] = 0
@@ -121,7 +135,7 @@ ConfigMap_hpModifier[489] = 0
 ConfigMap_RageFromDamageModifier[489] = 0
 ConfigMap_AbsorbModifier[489] = 0
 ConfigMap_HealingDoneModifier[489] = -20
-
+ConfigMap_PhysicalDamageTakenModifier[489] = 0
 -- Arathi Basin [529]
 ConfigMap_baseStatModifier[529] = 0
 ConfigMap_meleeAPModifier[529] = 0
@@ -132,7 +146,7 @@ ConfigMap_hpModifier[529] = 0
 ConfigMap_RageFromDamageModifier[529] = 0
 ConfigMap_AbsorbModifier[529] = 0
 ConfigMap_HealingDoneModifier[529] = -20
-
+ConfigMap_PhysicalDamageTakenModifier[529] = 0
 -- Ring of Trials [559]
 ConfigMap_baseStatModifier[559] = 0
 ConfigMap_meleeAPModifier[559] = 0
@@ -143,7 +157,7 @@ ConfigMap_hpModifier[559] = 0
 ConfigMap_RageFromDamageModifier[559] = 0
 ConfigMap_AbsorbModifier[559] = 0
 ConfigMap_HealingDoneModifier[559] = -20
-
+ConfigMap_PhysicalDamageTakenModifier[559] = 0
 -- Blade's Edge Arena [562]
 ConfigMap_baseStatModifier[562] = 0
 ConfigMap_meleeAPModifier[562] = 0
@@ -154,7 +168,7 @@ ConfigMap_hpModifier[562] = 0
 ConfigMap_RageFromDamageModifier[562] = 0
 ConfigMap_AbsorbModifier[562] = 0
 ConfigMap_HealingDoneModifier[562] = -20
-
+ConfigMap_PhysicalDamageTakenModifier[562] = 0
 -- Ruins of Lordaeron [572]
 ConfigMap_baseStatModifier[572] = 0
 ConfigMap_meleeAPModifier[572] = 0
@@ -165,7 +179,7 @@ ConfigMap_hpModifier[572] = 0
 ConfigMap_RageFromDamageModifier[572] = 0
 ConfigMap_AbsorbModifier[572] = 0
 ConfigMap_HealingDoneModifier[572] = -20
-
+ConfigMap_PhysicalDamageTakenModifier[572] = 0
 -- Dalaran Arena [617]
 ConfigMap_baseStatModifier[617] = 0
 ConfigMap_meleeAPModifier[617] = 0
@@ -176,7 +190,7 @@ ConfigMap_hpModifier[617] = 0
 ConfigMap_RageFromDamageModifier[617] = 0
 ConfigMap_AbsorbModifier[617] = 0
 ConfigMap_HealingDoneModifier[617] = -20
-
+ConfigMap_PhysicalDamageTakenModifier[617] = 0
 -- Ring of Valor [618]
 ConfigMap_baseStatModifier[618] = 0
 ConfigMap_meleeAPModifier[618] = 0
@@ -187,7 +201,7 @@ ConfigMap_hpModifier[618] = 0
 ConfigMap_RageFromDamageModifier[618] = 0
 ConfigMap_AbsorbModifier[618] = 0
 ConfigMap_HealingDoneModifier[618] = -20
-
+ConfigMap_PhysicalDamageTakenModifier[618] = 0
 
 -- These values apply to all maps in Config_DungeonMaps
 -- all modifiers are in %
@@ -200,7 +214,7 @@ ConfigDungeon.hpModifier = -30
 ConfigDungeon.RageFromDamage = 10
 ConfigDungeon.Absorb = 0
 ConfigDungeon.HealingDone = 0
-
+ConfigDungeon.PhysicalDamageTakenModifier = 0
 
 -- all players in these maps will become debuffed on login, when entering and resurrecting
 table.insert(Config_DungeonMaps, 429) -- Dire Maul
@@ -213,7 +227,7 @@ table.insert(Config_Maps, 249) -- Onyxia's Lair
 table.insert(Config_Maps, 469) -- Blackwing Lair
 --table.insert(Config_Maps, 509) -- Ruins of Ahn'Qiraj
 --table.insert(Config_Maps, 531) -- Temple of Ahn'Qiraj
---table.insert(Config_Maps, 309) -- Zul Gurub
+table.insert(Config_Maps, 309) -- Zul Gurub
 table.insert(Config_Maps, 30) -- Alterac Valley
 table.insert(Config_Maps, 489) -- Warsong Gulch
 table.insert(Config_Maps, 529) -- Arathi Basin
@@ -343,6 +357,9 @@ local function zd_debuffByMap(player)
     if not player:HasAura(Config.HealingDoneSpell) then
         player:CastCustomSpell(player, Config.HealingDoneSpell, false, ConfigMap_HealingDoneModifier[mapId])
     end
+    if not player:HasAura(Config.PhysicalDamageTakenSpelll) then
+        player:CastCustomSpell(player, Config.PhysicalDamageTakenSpell, false, ConfigMap_PhysicalDamageTakenModifier[mapId])
+    end
     if Config.VisualSpellRaid ~= nil then
         if not player:HasAura(Config.VisualSpellRaid) then
             player:CastSpell(player, Config.VisualSpellRaid, false)
@@ -369,6 +386,9 @@ local function zd_debuffDungeon(player)
     end
     if not player:HasAura(Config.HealingDoneSpell) then
         player:CastCustomSpell(player, Config.HealingDoneSpell, false, ConfigDungeon.HealingDoneModifier)
+    end
+    if not player:HasAura(Config.PhysicalDamageTakenSpell) then
+        player:CastCustomSpell(player, Config.PhysicalDamageTakenSpell, false, ConfigDungeon.PhysicalDamageTakenModifier)
     end
     if Config.VisualSpellDungeon ~= nil then
         if not player:HasAura(Config.VisualSpellDungeon) then
@@ -406,6 +426,7 @@ local function zd_removeDebuff(player)
     player:RemoveAura(Config.RageFromDamageSpell)
     player:RemoveAura(Config.AbsorbSpell)
     player:RemoveAura(Config.HealingDoneSpell)
+    player:RemoveAura(Config.PhysicalDamageTakenSpell)
     if Config.VisualSpellRaid ~= nil then
         player:RemoveAura(Config.VisualSpellRaid)
     end
