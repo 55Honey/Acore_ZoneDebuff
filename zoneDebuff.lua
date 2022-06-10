@@ -358,7 +358,7 @@ local function zd_debuffByMap(player)
         player:CastCustomSpell(player, Config.HealingDoneSpell, false, ConfigMap_HealingDoneModifier[mapId])
     end
     if not player:HasAura(Config.PhysicalDamageTakenSpell) then
-        player:CastCustomSpell(player, Config.PhysicalDamageTakenSpell, false, ConfigMap_PhysicalDamageTakenModifier[mapId])
+        player:CastCustomSpell(player, Config.PhysicalDamageTakenSpell, true, ConfigMap_PhysicalDamageTakenModifier[mapId])
     end
     if Config.VisualSpellRaid ~= nil then
         if not player:HasAura(Config.VisualSpellRaid) then
