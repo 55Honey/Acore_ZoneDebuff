@@ -107,13 +107,13 @@ ConfigMap_PhysicalDamageTakenModifier[469] = 0
 ConfigMap_baseStatModifier[309] = 0
 ConfigMap_meleeAPModifier[309] = 0
 ConfigMap_rangedAPModifier[309] = 0
-ConfigMap_DamageTaken[309] = 0
+ConfigMap_DamageTaken[309] = 10
 ConfigMap_DamageDoneModifier[309] = 0
 ConfigMap_hpModifier[309] = 0
 ConfigMap_RageFromDamageModifier[309] = 0
 ConfigMap_AbsorbModifier[309] = -50
 ConfigMap_HealingDoneModifier[309] = -50
-ConfigMap_PhysicalDamageTakenModifier[309] = 50
+ConfigMap_PhysicalDamageTakenModifier[309] = 40
 -- Alterac Valley [30]
 ConfigMap_baseStatModifier[30] = 0
 ConfigMap_meleeAPModifier[30] = 0
