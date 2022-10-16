@@ -127,6 +127,18 @@ ConfigMap_AbsorbModifier[509] = -50
 ConfigMap_HealingDoneModifier[509] = -50
 ConfigMap_PhysicalDamageTakenModifier[509] = 30
 
+-- Temple of Ahn'Qiraj [531]
+ConfigMap_baseStatModifier[531] = 0
+ConfigMap_meleeAPModifier[531] = 0
+ConfigMap_rangedAPModifier[531] = 0
+ConfigMap_DamageTaken[531] = 30
+ConfigMap_DamageDoneModifier[531] = 0
+ConfigMap_hpModifier[531] = 0
+ConfigMap_RageFromDamageModifier[531] = 0
+ConfigMap_AbsorbModifier[531] = -50
+ConfigMap_HealingDoneModifier[531] = -50
+ConfigMap_PhysicalDamageTakenModifier[531] = 40
+
 -- Alterac Valley [30]
 ConfigMap_baseStatModifier[30] = 0
 ConfigMap_meleeAPModifier[30] = 0
@@ -239,7 +251,7 @@ table.insert(Config_Maps, 409) -- Molten Core
 table.insert(Config_Maps, 249) -- Onyxia's Lair
 table.insert(Config_Maps, 469) -- Blackwing Lair
 table.insert(Config_Maps, 509) -- Ruins of Ahn'Qiraj
---table.insert(Config_Maps, 531) -- Temple of Ahn'Qiraj
+table.insert(Config_Maps, 531) -- Temple of Ahn'Qiraj
 table.insert(Config_Maps, 309) -- Zul Gurub
 table.insert(Config_Maps, 30) -- Alterac Valley
 table.insert(Config_Maps, 489) -- Warsong Gulch
