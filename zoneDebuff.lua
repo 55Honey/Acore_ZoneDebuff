@@ -137,7 +137,7 @@ ConfigMap_hpModifier[531] = 0
 ConfigMap_RageFromDamageModifier[531] = 0
 ConfigMap_AbsorbModifier[531] = -50
 ConfigMap_HealingDoneModifier[531] = -50
-ConfigMap_PhysicalDamageTakenModifier[531] = 40
+ConfigMap_PhysicalDamageTakenModifier[531] = 20
 
 -- Alterac Valley [30]
 ConfigMap_baseStatModifier[30] = 0
