@@ -413,11 +413,8 @@ end
 
 local function zd_debuffByMapPet(pet)
     local mapId = pet:GetMap():GetMapId()
-    pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, false, ConfigMap_DamageTaken[mapId],ConfigMap_DamageDoneModifier[mapId])
-    pet:CastCustomSpell(pet, Config.HpAuraSpell, false, ConfigMap_hpModifier[mapId])
-    pet:CastCustomSpell(player, Config.AbsorbSpell, false, ConfigMap_AbsorbModifier[mapId])
-    pet:CastCustomSpell(player, Config.HealingDoneSpell, false, ConfigMap_HealingDoneModifier[mapId])
-    pet:CastCustomSpell(player, Config.PhysicalDamageTakenSpell, false, ConfigMap_PhysicalDamageTakenModifier[mapId])
+    pet:CastCustomSpell(pet, Config.DamageDoneTakenSpell, true, ConfigMap_DamageTaken[mapId],ConfigMap_DamageDoneModifier[mapId])
+    pet:CastCustomSpell(pet, Config.PhysicalDamageTakenSpell, true, ConfigMap_PhysicalDamageTakenModifier[mapId])
  end
 
 local function zd_debuffPetDungeon(pet)
@@ -454,9 +451,6 @@ end
 
 local function zd_removeDebuffPet(pet)
     pet:RemoveAura(Config.DamageDoneTakenSpell)
-    pet:RemoveAura(Config.HpAuraSpell)
-    pet:RemoveAura(Config.AbsorbSpell)
-    pet:RemoveAura(Config.HealingDoneSpell)
     pet:RemoveAura(Config.PhysicalDamageTakenSpell)
 end
 
