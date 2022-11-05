@@ -1,6 +1,12 @@
 ## lua-zone-debuff
 Lua script for Azerothcore with ElunaLUA to buff/debuff players in zones listed in the configuration.
 
+
+# Deprecated
+## This lua script is now deprecated. It is encouraged to replace it with https://github.com/Nyeriah/mod-zone-difficulty.
+
+
+
 #### Find me on patreon: https://www.patreon.com/Honeys
 
 ## Requirements:
