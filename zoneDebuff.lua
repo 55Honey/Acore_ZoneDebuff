@@ -36,7 +36,7 @@ local Config_NoWorldBuffMaps = {}  -- maps where to remove world buffs
 local Config_WorldBuff = {}        -- spell IDs of world buffs to be removed
 
 -- on/off switch (0/1)
-Config.MapsActive = 1
+Config.MapsActive = 0
 Config.DungeonActive = 0
 Config.NoWorldBuffMaps = 1
 
