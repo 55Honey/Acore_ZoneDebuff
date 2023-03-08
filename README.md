@@ -3,7 +3,7 @@ Lua script for Azerothcore with ElunaLUA to buff/debuff players in zones listed 
 
 
 # Deprecated
-## This lua script is now deprecated. It is encouraged to replace it with https://github.com/Nyeriah/mod-zone-difficulty.
+## This lua script is now deprecated. It is encouraged to replace it with https://github.com/Azerothcore/mod-zone-difficulty.
 
 
 
